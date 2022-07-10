@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * TeamApps Application Server
+ * TeamApps Core System Model
  * ---
  * Copyright (C) 2020 - 2022 TeamApps.org
  * ---
