@@ -250,12 +250,21 @@ public class Model implements SchemaInfoProvider {
 				.addInteger("applicationOpenCount")
 		;
 
+		Table languageSettings = db.addTable("languageSettings", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
+
+		languageSettings
+				.addText("language")
+				.addEnum("languageSkillLevel", "motherTongue", "Excellent", "Good", "Unknown")
+		;
+
 		user
 				.addText("firstName")
+				.addText("firstNameTranslated")
 				.addText("lastName")
+				.addText("lastNameTranslated")
 				.addBinary("profilePicture")
 				.addBinary("profilePictureLarge")
-				.addText("languages")
+				.addText("language")
 				.addText("email")
 				.addText("mobile")
 				.addText("phone")
@@ -272,6 +281,8 @@ public class Model implements SchemaInfoProvider {
 				.addReference("roleAssignments", userRoleAssignment, true, "user", true)
 				.addReference("allGroupMemberships", userGroupMembership, true, "user", true)
 				.addReference("privateMessages", message, true, "privateRecipients") //private message entry instead!?
+				.addReference("languageSettings", languageSettings, true)
+
 		;
 
 		userAcceptedPolicy
@@ -341,6 +352,7 @@ public class Model implements SchemaInfoProvider {
 				.addReference("children", organizationUnit, true, "parent")
 				.addReference("type", organizationUnitType, false)
 				.addText("icon")
+				.addEnum("orgUnitLifeCycleStatus", "active", "inactive", "prepareDeletion")
 				.addReference("address", address, false)
 				.addReference("users", user, true, "organizationUnit")
 		;
@@ -351,6 +363,7 @@ public class Model implements SchemaInfoProvider {
 				.addReference("children", organizationUnitView, true, "parent")
 				.addReference("type", organizationUnitTypeView, false)
 				.addText("icon")
+				.addEnum("orgUnitLifeCycleStatus", "active", "inactive", "prepareDeletion")
 				.addReference("address", addressView, false)
 		;
 
