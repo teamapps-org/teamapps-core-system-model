@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -47,6 +47,7 @@ public class Model implements SchemaInfoProvider {
 		Table organizationUnitTypeView = db.addView("organizationUnitTypeView", organizationUnitType);
 		Table organizationFieldView = db.addView("organizationFieldView", organizationField);
 		Table addressView = db.addView("addressView", address);
+		Table userView = db.addView("userView", user);
 
 		Table role = db.addTable("role", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
 		Table userRoleAssignment = db.addTable("userRoleAssignment", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
@@ -285,6 +286,17 @@ public class Model implements SchemaInfoProvider {
 
 		;
 
+		userView
+				.addText("firstName")
+				.addText("firstNameTranslated")
+				.addText("lastName")
+				.addText("lastNameTranslated")
+				.addBinary("profilePicture")
+				.addBinary("profilePictureLarge")
+				.addText("language")
+				.addReference("organizationUnit", organizationUnitView, false)
+		;
+
 		userAcceptedPolicy
 				.addInteger("lastAcceptedPrivacyPolicy")
 				.addInteger("lastAcceptedTermsOfUse")
@@ -355,6 +367,7 @@ public class Model implements SchemaInfoProvider {
 				.addEnum("orgUnitLifeCycleStatus", "active", "inactive", "prepareDeletion")
 				.addReference("address", address, false)
 				.addReference("users", user, true, "organizationUnit")
+				.addReference("userRoleAssignments", userRoleAssignment, true, "organizationUnit")
 		;
 
 		organizationUnitView
@@ -423,7 +436,7 @@ public class Model implements SchemaInfoProvider {
 		userRoleAssignment
 				.addReference("user", user, false, "roleAssignments")
 				.addReference("role", role, false, "userRoleAssignments")
-				.addReference("organizationUnit", organizationUnit, false)
+				.addReference("organizationUnit", organizationUnit, false, "userRoleAssignments")
 				.addInteger("delegatedCustomPrivilegeObjectId")
 				.addBoolean("mainResponsible")
 				.addTimestamp("lastVerified")
