@@ -100,6 +100,7 @@ public class Model implements SchemaInfoProvider {
 				.addText("icon")
 				.addText("titleKey")
 				.addText("descriptionKey")
+				.addBoolean("uninstalled")
 				.addBoolean("unmanagedApplication")
 				.addText("config")
 				.addBoolean("darkTheme")
