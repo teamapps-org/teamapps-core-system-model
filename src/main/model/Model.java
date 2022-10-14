@@ -37,6 +37,8 @@ public class Model implements SchemaInfoProvider {
 		Table userAcceptedPolicy = db.addTable("userAcceptedPolicy", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
 		Table userAcceptedPolicyEntries = db.addTable("userAcceptedPolicyEntries", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
 		Table userAccessToken = db.addTable("userAccessToken", KEEP_DELETED, TRACK_CREATION);
+		Table userLanguageSettings = db.addTable("userLanguageSettings", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
+		Table userLoginStats = db.addTable("userLoginStats");
 		Table organizationUnit = db.addTable("organizationUnit", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
 		Table organizationUnitType = db.addTable("organizationUnitType", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
 		Table organizationField = db.addTable("organizationField", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
@@ -72,19 +74,6 @@ public class Model implements SchemaInfoProvider {
 		Table localizationKey = db.addTable("localizationKey", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
 		Table localizationValue = db.addTable("localizationValue", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
 		Table localizationTopic = db.addTable("localizationTopic", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-
-		//workspace model:
-		Table group = db.addTable("group", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table groupMembershipDefinition = db.addTable("groupMembershipDefinition", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table groupFolder = db.addTable("groupFolder", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table userGroupMembership = db.addTable("userGroupMembership");
-		Table applicationFolder = db.addTable("applicationFolder", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table message = db.addTable("message", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table appointment = db.addTable("appointment", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table appointmentSeries = db.addTable("appointmentSeries", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-
-		Table chatChannel = db.addTable("chatChannel", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table chatMessage = db.addTable("chatMessage", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
 
 		//news board:
 		Table newsBoardMessage = db.addTable("newsBoardMessage", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
@@ -252,12 +241,24 @@ public class Model implements SchemaInfoProvider {
 				.addInteger("applicationOpenCount")
 		;
 
-		Table languageSettings = db.addTable("languageSettings", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
 
-		languageSettings
+
+		userLanguageSettings
 				.addText("language")
 				.addEnum("languageSkillLevel", "motherTongue", "Excellent", "Good", "Unknown")
 		;
+
+
+		userLoginStats
+				.addReference("user", user, false, "loginStats")
+				.addTimestamp("firstLogin")
+				.addTimestamp("lastLogin")
+				.addInteger("loginCount")
+				.addTimestamp("lastLoginIpAddress")
+				.addTimestamp("wrongPasswordTimestamp")
+				.addTimestamp("wrongPasswordIpAddress")
+				.addInteger("wrongPasswordCount")
+				;
 
 		user
 				.addText("firstName")
@@ -271,7 +272,7 @@ public class Model implements SchemaInfoProvider {
 				.addText("mobile")
 				.addText("phone")
 				.addText("login")
-				.addTimestamp("lastLogin")
+				.addTimestamp("lastLogin") //todo replace with userLoginStats
 				.addText("password")
 				.addText("theme")
 				.addBoolean("darkTheme")
@@ -281,10 +282,8 @@ public class Model implements SchemaInfoProvider {
 				.addReference("organizationUnit", organizationUnit, false, "users")
 				.addReference("accessTokens", userAccessToken, true, "user", true)
 				.addReference("roleAssignments", userRoleAssignment, true, "user", true)
-				.addReference("allGroupMemberships", userGroupMembership, true, "user", true)
-				.addReference("privateMessages", message, true, "privateRecipients") //private message entry instead!?
-				.addReference("languageSettings", languageSettings, true)
-
+				.addReference("languageSettings", userLanguageSettings, true)
+				.addReference("loginStats", userLoginStats, false, "user")
 		;
 
 		userView
@@ -467,96 +466,6 @@ public class Model implements SchemaInfoProvider {
 				.addBoolean("noInheritanceOfOrganizationalUnits")
 		;
 
-
-		group
-				.addEnum("groupType", "messageGroup", "workGroup")
-				.addText("name") //addTranslatableText
-				.addText("description") //addTranslatableText
-				.addText("language")
-				.addReference("organizationField", organizationField, false)
-				.addReference("organizationUnit", organizationUnit, false)
-				.addReference("owner", user, false)
-				.addReference("moderators", user, true)
-				.addReference("mentors", user, true)
-				.addBoolean("valid")
-				.addReference("membershipDefinitions", groupMembershipDefinition, true, "group")
-				.addReference("registrationAllowedForDefinitions", groupMembershipDefinition, true)
-				.addReference("userMemberships", userGroupMembership, true, "group")
-				.addTimestamp("lastMessageDate")
-				.addReference("groupFolders", groupFolder, true, "group")
-		;
-
-		groupMembershipDefinition
-				.addEnum("groupMemberType", "user", "group", "roleMember", "userContainer")
-				.addReference("user", user, false)
-				.addReference("group", group, false)
-				.addReference("role", role, false)
-				.addReference("organizationUnit", organizationUnit, false)
-				.addReference("organizationUnitTypesFilter", organizationUnitType, true)
-		;
-
-		groupFolder
-				.addReference("group", group, false, "groupFolders")
-				.addText("name")
-				.addBoolean("moderatorReadAccess")
-				.addBoolean("moderatorWriteAccess")
-				.addText("subjectTags") //message/chat subjects, file tags,
-				.addEnum("groupFolderType", "chat", "messages", "files", "calendar")
-				.addReference("messages", message, true, "groupFolder")
-		;
-
-		applicationFolder
-				.addText("name")
-				.addReference("application", application, false)
-				.addEnum("applicationFolderType", "chat", "messages", "files", "calendar")
-				.addReference("parent", applicationFolder, false, "children")
-				.addReference("children", applicationFolder, true, "parent")
-				.addReference("messages", message, true, "applicationFolder")
-
-		;
-
-
-		userGroupMembership
-				.addReference("group", group, false, "userMemberships")
-				.addReference("user", user, false, "allGroupMemberships")
-				.addEnum("groupMembershipRole", "participant", "moderator", "mentor", "owner")
-				.addBoolean("membershipRejected")
-				.addEnum("groupMembershipNotificationSetting", "standard", "silent");
-
-
-		message
-				.addEnum("messageRecipientType", "private", "groupFolder", "applicationFolder") //todo message group as recipient?
-				.addReference("privateRecipients", user, true, "privateMessages")
-				.addReference("groupFolder", groupFolder, false, "messages")
-				.addReference("applicationFolder", applicationFolder, false, "messages")
-				.addText("subject") //todo translatable text?
-				.addText("message") //todo translatable text?
-				.addEnum("messageType", "message", "chatMessage", "appointment", "appointmentSeries", "file")
-				.addFile("file")
-				.addReference("appointment", appointment, false, "message")
-				.addReference("appointmentSeries", appointmentSeries, false, "message")
-		;
-
-		appointment
-				.addReference("message", message, false, "appointment")
-				.addReference("appointmentSeries", appointmentSeries, false, "appointments")
-				.addBoolean("webConference") //conference object -> recording
-				.addDateTime("startDateTime")
-				.addDateTime("endDateTime")
-				.addBoolean("fullDayEvent")
-		;
-
-		appointmentSeries
-				.addReference("message", message, false, "appointmentSeries")
-				.addReference("appointments", appointment, true, "appointmentSeries")
-				.addEnum("appointmentSeriesType", "daily", "weekly", "monthly", "yearly")
-				.addInteger("repeatEvery")
-				.addDateTime("startDateTime")
-				.addDateTime("endDateTime")
-				.addBoolean("fullDayEvent")
-				.addLocalDate("seriesEndDate");
-
-
 		//news board
 		newsBoardMessage
 				.addBoolean("published")
@@ -581,19 +490,6 @@ public class Model implements SchemaInfoProvider {
 				.addText("language")
 				.addText("translation")
 		;
-
-		//chat server
-		chatChannel
-				.addText("title")
-				.addReference("chatMessages", chatMessage, true, "chatChannel")
-		;
-
-		chatMessage
-				.addReference("chatChannel", chatChannel, false, "chatMessages")
-				.addReference("author", user, false)
-				.addText("message")
-		;
-
 
 		return schema;
 	}
