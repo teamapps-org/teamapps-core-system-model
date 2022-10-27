@@ -190,6 +190,7 @@ public class Model implements SchemaInfoProvider {
 
 		managedApplicationGroup
 				.addText("icon")
+				.addText("name")
 				.addText("titleKey") //.addTranslatableText("title")
 				.addReference("applications", managedApplication, true, "applicationGroup")
 				.addInteger("listingPosition")
