@@ -268,7 +268,7 @@ public class Model implements SchemaInfoProvider {
 				.addText("lastNameTranslated")
 				.addBinary("profilePicture")
 				.addBinary("profilePictureLarge")
-				.addText("language")
+				.addText("displayLanguage")
 				.addText("email")
 				.addText("mobile")
 				.addText("phone")
