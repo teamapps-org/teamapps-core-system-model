@@ -34,8 +34,6 @@ public class Model implements SchemaInfoProvider {
 		//system model:
 		Table login = db.addTable("login", KEEP_DELETED);
 		Table user = db.addTable("user", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
-		Table userAcceptedPolicy = db.addTable("userAcceptedPolicy", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
-		Table userAcceptedPolicyEntries = db.addTable("userAcceptedPolicyEntries", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
 		Table userAccessToken = db.addTable("userAccessToken", KEEP_DELETED, TRACK_CREATION);
 		Table userLanguageSettings = db.addTable("userLanguageSettings", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
 		Table userLoginStats = db.addTable("userLoginStats");
@@ -56,9 +54,6 @@ public class Model implements SchemaInfoProvider {
 		Table rolePrivilegeAssignment = db.addTable("rolePrivilegeAssignment", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
 		Table roleApplicationRoleAssignment = db.addTable("roleApplicationRoleAssignment", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
 
-
-		Table systemSettings = db.addTable("systemSettings", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
-		Table systemLog = db.addTable("systemLog", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
 		Table application = db.addTable("application", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
 		Table applicationPerspective = db.addTable("applicationPerspective", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
 		Table applicationPrivilegeGroup = db.addTable("applicationPrivilegeGroup", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
@@ -75,14 +70,6 @@ public class Model implements SchemaInfoProvider {
 		Table localizationValue = db.addTable("localizationValue", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
 		Table localizationTopic = db.addTable("localizationTopic", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
 
-		//news board:
-		Table newsBoardMessage = db.addTable("newsBoardMessage", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table newsBoardMessageImage = db.addTable("newsBoardMessageImage", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table newsBoardMessageTranslation = db.addTable("newsBoardMessageTranslation", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-
-		systemSettings
-				.addText("allowedBaseLanguages")
-		;
 
 		application
 				.addText("name")
@@ -147,19 +134,6 @@ public class Model implements SchemaInfoProvider {
 				.addInteger("dataAddedRows")
 				.addText("dataRemoved")
 				.addInteger("dataRemovedRows")
-		;
-
-		systemLog
-				.addReference("managedApplication", managedApplication, false)
-				.addReference("managedPerspective", managedApplicationPerspective, false)
-				.addReference("application", application, false)
-				.addReference("applicationPerspective", applicationPerspective, false)
-				.addReference("applicationVersion", applicationVersion, false)
-				.addEnum("logLevel", "info", "warning", "error")
-				.addText("thread")
-				.addText("message")
-				.addText("details")
-				.addText("exceptionClass")
 		;
 
 		managedApplication
@@ -278,7 +252,6 @@ public class Model implements SchemaInfoProvider {
 				.addText("theme")
 				.addBoolean("darkTheme")
 				.addEnum("userAccountStatus", "active", "inactive", "superAdmin")
-				.addReference("acceptedPolicies", userAcceptedPolicy, false)
 				.addReference("address", address, false)
 				.addReference("organizationUnit", organizationUnit, false, "users")
 				.addReference("accessTokens", userAccessToken, true, "user", true)
@@ -296,17 +269,6 @@ public class Model implements SchemaInfoProvider {
 				.addBinary("profilePictureLarge")
 				.addText("language")
 				.addReference("organizationUnit", organizationUnitView, false)
-		;
-
-		userAcceptedPolicy
-				.addInteger("lastAcceptedPrivacyPolicy")
-				.addInteger("lastAcceptedTermsOfUse")
-				.addReference("acceptEntries", userAcceptedPolicyEntries, true)
-		;
-
-		userAcceptedPolicyEntries
-				.addInteger("acceptedPrivacyPolicy")
-				.addInteger("acceptedTermsOfUse")
 		;
 
 		userAccessToken
@@ -465,31 +427,6 @@ public class Model implements SchemaInfoProvider {
 				.addReference("fixedOrganizationRoot", organizationUnit, false)
 				.addReference("organizationUnitTypeFilter", organizationUnitType, true)
 				.addBoolean("noInheritanceOfOrganizationalUnits")
-		;
-
-		//news board
-		newsBoardMessage
-				.addBoolean("published")
-				.addText("htmlMessage")
-				.addText("language")
-				.addReference("images", newsBoardMessageImage, true, true)
-				.addReference("translations", newsBoardMessageTranslation, true, true)
-				.addReference("organizationField", organizationField, false)
-				.addReference("organizationUnit", organizationUnit, false)
-		;
-
-		newsBoardMessageImage
-				.addFile("file")
-				.addFile("thumbnail")
-				.addText("fileName")
-				.addBoolean("embedded")
-				.addInteger("position")
-		;
-
-		newsBoardMessageTranslation
-				.addReference("message", newsBoardMessage, false, "translations")
-				.addText("language")
-				.addText("translation")
 		;
 
 		return schema;
