@@ -18,417 +18,440 @@
  * =========================LICENSE_END==================================
  */
 
+import org.teamapps.universaldb.model.DatabaseModel;
+import org.teamapps.universaldb.model.TableModel;
 import org.teamapps.universaldb.schema.*;
+
+import java.util.Arrays;
 
 import static org.teamapps.universaldb.schema.TableOption.*;
 
-public class Model implements SchemaInfoProvider {
-
+public class Model implements ModelProvider {
 
 	@Override
-	public Schema getSchema() {
-		Schema schema = Schema.create("org.teamapps.model");
-		schema.setSchemaName("ControlCenterSchema");
-		Database db = schema.addDatabase("controlCenter");
+	public DatabaseModel getModel() {
+		DatabaseModel model = new DatabaseModel("controlCenter", "Control center", "org.teamapps.model");
+		model.setPojoBuildTime(1686232224912L);
+		model.createEnum("userAccountStatus", "User account status", Arrays.asList("active", "inactive", "superAdmin"), Arrays.asList("active", "inactive", "Super admin"));
+		model.createEnum("languageSkillLevel", "Language skill level", Arrays.asList("motherTongue", "excellent", "good", "unknown"), Arrays.asList("Mother tongue", "Excellent", "Good", "Unknown"));
+		model.createEnum("orgUnitLifeCycleStatus", "Org unit life cycle status", Arrays.asList("active", "inactive", "prepareDeletion"), Arrays.asList("active", "inactive", "Prepare deletion"));
+		model.createEnum("geoLocationType", "Geo location type", Arrays.asList("country", "state", "city", "place", "none"), Arrays.asList("country", "state", "city", "place", "none"));
+//		model.createEnum("orgUnitLifeCycleStatus", "Org unit life cycle status", Arrays.asList("active", "inactive", "prepareDeletion"), Arrays.asList("active", "inactive", "Prepare deletion"));
+//		model.createEnum("geoLocationType", "Geo location type", Arrays.asList("country", "state", "city", "place", "none"), Arrays.asList("country", "state", "city", "place", "none"));
+		model.createEnum("roleType", "Role type", Arrays.asList("leader", "assistant", "mentor", "administrator", "other"), Arrays.asList("leader", "assistant", "mentor", "administrator", "other"));
+		model.createEnum("logLevel", "Log level", Arrays.asList("info", "warning", "error"), Arrays.asList("info", "warning", "error"));
+		model.createEnum("applicationPrivilegeGroupType", "Application privilege group type", Arrays.asList("simplePrivilege", "simpleOrganizationalPrivilege", "simpleCustomObjectPrivilege", "standardPrivilegeGroup", "organizationalPrivilegeGroup", "customObjectPrivilegeGroup", "roleAssignmentDelegatedCustomPrivilegeGroup"), Arrays.asList("Simple privilege", "Simple organizational privilege", "Simple custom object privilege", "Standard privilege group", "Organizational privilege group", "Custom object privilege group", "Role assignment delegated custom privilege group"));
+		model.createEnum("localizationKeyFormat", "Localization key format", Arrays.asList("singleLine", "multiLine", "formatted"), Arrays.asList("Single line", "Multi line", "formatted"));
+		model.createEnum("localizationKeyType", "Localization key type", Arrays.asList("applicationResourceKey", "dictionaryKey", "reportingKey", "systemKey"), Arrays.asList("Application resource key", "Dictionary key", "Reporting key", "System key"));
+		model.createEnum("machineTranslationState", "Machine translation state", Arrays.asList("translationRequested", "ok", "failed", "notNecessary"), Arrays.asList("Translation requested", "ok", "failed", "Not necessary"));
+		model.createEnum("translationState", "Translation state", Arrays.asList("translationRequested", "ok", "unclear", "notNecessary"), Arrays.asList("Translation requested", "ok", "unclear", "Not necessary"));
+		model.createEnum("translationVerificationState", "Translation verification state", Arrays.asList("notYetTranslated", "verificationRequested", "ok", "correctionsRequired", "notNecessary"), Arrays.asList("Not yet translated", "Verification requested", "ok", "Corrections required", "Not necessary"));
 
-		//system model:
-		Table login = db.addTable("login", KEEP_DELETED);
-		Table user = db.addTable("user", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
-		Table userAccessToken = db.addTable("userAccessToken", KEEP_DELETED, TRACK_CREATION);
-		Table userLanguageSettings = db.addTable("userLanguageSettings", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table userLoginStats = db.addTable("userLoginStats");
-		Table organizationUnit = db.addTable("organizationUnit", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table organizationUnitType = db.addTable("organizationUnitType", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table organizationField = db.addTable("organizationField", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table address = db.addTable("address", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
+		TableModel loginTable = model.createTable("login", "login", false, false, true);
+		TableModel userTable = model.createTable("user", "user", true, false, true);
+		TableModel userAcceptedPolicyTable = model.createTable("userAcceptedPolicy", "User accepted policy", true, false, true);
+		TableModel userAcceptedPolicyEntriesTable = model.createTable("userAcceptedPolicyEntries", "User accepted policy entries", true, false, true);
+		TableModel userAccessTokenTable = model.createTable("userAccessToken", "User access token", false, false, true);
+		TableModel userLanguageSettingsTable = model.createTable("userLanguageSettings", "User language settings", true, false, true);
+		TableModel userLoginStatsTable = model.createTable("userLoginStats", "User login stats", false, false, false);
+		TableModel organizationUnitTable = model.createTable("organizationUnit", "Organization unit", true, false, true);
+		TableModel organizationUnitTypeTable = model.createTable("organizationUnitType", "Organization unit type", true, false, true);
+		TableModel organizationFieldTable = model.createTable("organizationField", "Organization field", true, false, true);
+		TableModel addressTable = model.createTable("address", "address", true, false, true);
+		TableModel roleTable = model.createTable("role", "role", true, false, true);
+		TableModel userRoleAssignmentTable = model.createTable("userRoleAssignment", "User role assignment", true, false, true);
+		TableModel rolePrivilegeAssignmentTable = model.createTable("rolePrivilegeAssignment", "Role privilege assignment", true, false, true);
+		TableModel roleApplicationRoleAssignmentTable = model.createTable("roleApplicationRoleAssignment", "Role application role assignment", true, false, true);
+		TableModel systemSettingsTable = model.createTable("systemSettings", "System settings", true, false, true);
+		TableModel systemLogTable = model.createTable("systemLog", "System log", true, false, true);
+		TableModel applicationTable = model.createTable("application", "application", true, false, true);
+		TableModel applicationPerspectiveTable = model.createTable("applicationPerspective", "Application perspective", true, false, true);
+		TableModel applicationPrivilegeGroupTable = model.createTable("applicationPrivilegeGroup", "Application privilege group", true, false, true);
+		TableModel applicationPrivilegeTable = model.createTable("applicationPrivilege", "Application privilege", true, false, true);
+		TableModel applicationVersionTable = model.createTable("applicationVersion", "Application version", true, false, true);
+		TableModel applicationVersionDataTable = model.createTable("applicationVersionData", "Application version data", true, false, true);
+		TableModel managedApplicationTable = model.createTable("managedApplication", "Managed application", true, false, true);
+		TableModel managedApplicationPerspectiveTable = model.createTable("managedApplicationPerspective", "Managed application perspective", true, false, true);
+		TableModel managedApplicationGroupTable = model.createTable("managedApplicationGroup", "Managed application group", true, false, true);
+		TableModel localizationKeyTable = model.createTable("localizationKey", "Localization key", true, false, true);
+		TableModel localizationValueTable = model.createTable("localizationValue", "Localization value", true, false, true);
+		TableModel localizationTopicTable = model.createTable("localizationTopic", "Localization topic", true, false, true);
+		TableModel newsBoardMessageTable = model.createTable("newsBoardMessage", "News board message", true, false, true);
+		TableModel newsBoardMessageImageTable = model.createTable("newsBoardMessageImage", "News board message image", true, false, true);
+		TableModel newsBoardMessageTranslationTable = model.createTable("newsBoardMessageTranslation", "News board message translation", true, false, true);
+		TableModel organizationUnitViewTable = model.createRemoteTable("organizationUnitView", "Organization unit view", "controlCenter");
+		TableModel organizationUnitTypeViewTable = model.createRemoteTable("organizationUnitTypeView", "Organization unit type view", "controlCenter");
+		TableModel organizationFieldViewTable = model.createRemoteTable("organizationFieldView", "Organization field view", "controlCenter");
+		TableModel addressViewTable = model.createRemoteTable("addressView", "Address view", "controlCenter");
+		TableModel userViewTable = model.createRemoteTable("userView", "User view", "controlCenter");
 
-		//views:
-		Table organizationUnitView = db.addView("organizationUnitView", organizationUnit);
-		Table organizationUnitTypeView = db.addView("organizationUnitTypeView", organizationUnitType);
-		Table organizationFieldView = db.addView("organizationFieldView", organizationField);
-		Table addressView = db.addView("addressView", address);
-		Table userView = db.addView("userView", user);
+		loginTable.addReference("user", "user", "user", false);
+		loginTable.addText("ip", "ip");
+		loginTable.addText("userAgent", "User agent");
+		loginTable.addBoolean("mobileDevice", "Mobile device");
+		loginTable.addText("screenSize", "Screen size");
+		loginTable.addTimestamp("dateLogin", "Date login");
+		loginTable.addTimestamp("dateLogout", "Date logout");
+		loginTable.addInteger("activityCount", "Activity count");
+		loginTable.addInteger("applicationOpenCount", "Application open count");
 
-		Table role = db.addTable("role", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table userRoleAssignment = db.addTable("userRoleAssignment", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table rolePrivilegeAssignment = db.addTable("rolePrivilegeAssignment", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table roleApplicationRoleAssignment = db.addTable("roleApplicationRoleAssignment", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
+		userTable.addText("firstName", "First name");
+		userTable.addText("firstNameTranslated", "First name translated");
+		userTable.addText("lastName", "Last name");
+		userTable.addText("lastNameTranslated", "Last name translated");
+		userTable.addByteArray("profilePicture", "Profile picture");
+		userTable.addByteArray("profilePictureLarge", "Profile picture large");
+		userTable.addText("displayLanguage", "Display language");
+		userTable.addText("email", "email");
+		userTable.addText("mobile", "mobile");
+		userTable.addText("phone", "phone");
+		userTable.addText("login", "login");
+		userTable.addTimestamp("lastLogin", "Last login");
+		userTable.addText("password", "password");
+		userTable.addText("theme", "theme");
+		userTable.addBoolean("darkTheme", "Dark theme");
+		userTable.addEnum("userAccountStatus", "User account status", "userAccountStatus");
+		userTable.addReference("acceptedPolicies", "Accepted policies", "userAcceptedPolicy", false);
+		userTable.addReference("address", "address", "address", false);
+		userTable.addReference("organizationUnit", "Organization unit", "organizationUnit", false);
+		userTable.addMultiReference("accessTokens", "Access tokens", "userAccessToken", true);
+		userTable.addMultiReference("roleAssignments", "Role assignments", "userRoleAssignment", true);
+		userTable.addMultiReference("languageSettings", "Language settings", "userLanguageSettings", false);
+		userTable.addReference("loginStats", "Login stats", "userLoginStats", false);
 
-		Table application = db.addTable("application", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
-		Table applicationPerspective = db.addTable("applicationPerspective", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
-		Table applicationPrivilegeGroup = db.addTable("applicationPrivilegeGroup", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
-		Table applicationPrivilege = db.addTable("applicationPrivilege", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
-		Table applicationVersion = db.addTable("applicationVersion", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
-		Table applicationVersionData = db.addTable("applicationVersionData", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
+		userAcceptedPolicyTable.addInteger("lastAcceptedPrivacyPolicy", "Last accepted privacy policy");
+		userAcceptedPolicyTable.addInteger("lastAcceptedTermsOfUse", "Last accepted terms of use");
+		userAcceptedPolicyTable.addMultiReference("acceptEntries", "Accept entries", "userAcceptedPolicyEntries", false);
 
-		Table managedApplication = db.addTable("managedApplication", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
-		Table managedApplicationPerspective = db.addTable("managedApplicationPerspective", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
+		userAcceptedPolicyEntriesTable.addInteger("acceptedPrivacyPolicy", "Accepted privacy policy");
+		userAcceptedPolicyEntriesTable.addInteger("acceptedTermsOfUse", "Accepted terms of use");
 
-		Table managedApplicationGroup = db.addTable("managedApplicationGroup", TableOption.KEEP_DELETED, TableOption.TRACK_CREATION, TableOption.TRACK_MODIFICATION);
+		userAccessTokenTable.addReference("user", "user", "user", false);
+		userAccessTokenTable.addText("userAgentOnCreation", "User agent on creation");
+		userAccessTokenTable.addText("userAgentLastUsed", "User agent last used");
+		userAccessTokenTable.addTimestamp("lastUsed", "Last used");
+		userAccessTokenTable.addBoolean("valid", "valid");
+		userAccessTokenTable.addBoolean("restApi", "Rest api");
+		userAccessTokenTable.addText("secureToken", "Secure token");
 
-		Table localizationKey = db.addTable("localizationKey", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table localizationValue = db.addTable("localizationValue", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
-		Table localizationTopic = db.addTable("localizationTopic", KEEP_DELETED, TRACK_CREATION, TRACK_MODIFICATION);
+		userLanguageSettingsTable.addText("language", "language");
+		userLanguageSettingsTable.addEnum("languageSkillLevel", "Language skill level", "languageSkillLevel");
 
+		userLoginStatsTable.addReference("user", "user", "user", false);
+		userLoginStatsTable.addTimestamp("firstLogin", "First login");
+		userLoginStatsTable.addTimestamp("lastLogin", "Last login");
+		userLoginStatsTable.addInteger("loginCount", "Login count");
+		userLoginStatsTable.addTimestamp("lastLoginIpAddress", "Last login ip address");
+		userLoginStatsTable.addTimestamp("wrongPasswordTimestamp", "Wrong password timestamp");
+		userLoginStatsTable.addTimestamp("wrongPasswordIpAddress", "Wrong password ip address");
+		userLoginStatsTable.addInteger("wrongPasswordCount", "Wrong password count");
 
-		application
-				.addText("name")
-				.addText("icon")
-				.addText("titleKey")
-				.addText("descriptionKey")
-				.addBoolean("uninstalled")
-				.addBoolean("unmanagedApplication")
-				.addText("config")
-				.addBoolean("darkTheme")
-				.addReference("perspectives", applicationPerspective, true, "application", true)
-				.addReference("privilegeGroups", applicationPrivilegeGroup, true, "application")
-				.addReference("versions", applicationVersion, true, "application")
-				.addReference("installedVersion", applicationVersion, false)
-				.addReference("installedAsMainApplication", managedApplication, true, "mainApplication")
-		;
+		organizationUnitTable.addTranslatableText("name", "name");
+		organizationUnitTable.addReference("parent", "parent", "organizationUnit", false);
+		organizationUnitTable.addMultiReference("children", "children", "organizationUnit", false);
+		organizationUnitTable.addReference("type", "type", "organizationUnitType", false);
+		organizationUnitTable.addText("icon", "icon");
+		organizationUnitTable.addEnum("orgUnitLifeCycleStatus", "Org unit life cycle status", "orgUnitLifeCycleStatus");
+		organizationUnitTable.addReference("address", "address", "address", false);
+		organizationUnitTable.addMultiReference("users", "users", "user", false);
+		organizationUnitTable.addMultiReference("userRoleAssignments", "User role assignments", "userRoleAssignment", false);
 
-		applicationPerspective
-				.addReference("application", application, false, "perspectives")
-				.addText("name")
-				.addText("icon")
-				.addText("titleKey")
-				.addText("descriptionKey")
-				.addBoolean("autoProvision")
-				.addBoolean("toolbarPerspectiveMenu")
-				.addReference("managedPerspectives", managedApplicationPerspective, true, "applicationPerspective", true)
-		;
+		organizationUnitTypeTable.addTranslatableText("name", "name");
+		organizationUnitTypeTable.addTranslatableText("abbreviation", "abbreviation");
+		organizationUnitTypeTable.addText("icon", "icon");
+		organizationUnitTypeTable.addBoolean("translateOrganizationUnits", "Translate organization units");
+		organizationUnitTypeTable.addBoolean("allowUsers", "Allow users");
+		organizationUnitTypeTable.addReference("defaultChildType", "Default child type", "organizationUnitType", false);
+		organizationUnitTypeTable.addMultiReference("possibleChildrenTypes", "Possible children types", "organizationUnitType", false);
+		organizationUnitTypeTable.addEnum("geoLocationType", "Geo location type", "geoLocationType");
 
-		applicationPrivilegeGroup
-				.addReference("application", application, false, "privilegeGroups")
-				.addEnum("applicationPrivilegeGroupType", "simplePrivilege", "simpleOrganizationalPrivilege", "simpleCustomObjectPrivilege", "standardPrivilegeGroup", "organizationalPrivilegeGroup", "customObjectPrivilegeGroup", "roleAssignmentDelegatedCustomPrivilegeGroup")
-				.addText("name")
-				.addText("icon")
-				.addText("titleKey")
-				.addText("descriptionKey")
-				.addReference("privileges", applicationPrivilege, true, "privilegeGroup")
-		;
+		organizationFieldTable.addTranslatableText("title", "title");
+		organizationFieldTable.addText("icon", "icon");
 
-		applicationPrivilege
-				.addReference("privilegeGroup", applicationPrivilegeGroup, false, "privileges")
-				.addText("name")
-				.addText("icon")
-				.addText("titleKey")
-		;
+		addressTable.addText("name", "name");
+		addressTable.addText("organisation", "organisation");
+		addressTable.addText("street", "street");
+		addressTable.addText("city", "city");
+		addressTable.addText("dependentLocality", "Dependent locality");
+		addressTable.addText("state", "state");
+		addressTable.addText("postalCode", "Postal code");
+		addressTable.addText("country", "country");
+		addressTable.addFloat("latitude", "latitude");
+		addressTable.addFloat("longitude", "longitude");
 
-		applicationVersion
-				.addReference("application", application, false, "versions")
-				.addFile("binary")
-				.addText("binaryHash")
-				.addText("version")
-				.addText("releaseNotes")
-				.addReference("dataModelData", applicationVersionData, false)
-				.addReference("localizationData", applicationVersionData, false)
-				.addReference("privilegeData", applicationVersionData, false)
-				.addReference("perspectiveData", applicationVersionData, false)
-		;
+		organizationUnitViewTable.addTranslatableText("name", "name");
+		organizationUnitViewTable.addReference("parent", "parent", "organizationUnitView", false);
+		organizationUnitViewTable.addMultiReference("children", "children", "organizationUnitView", false);
+		organizationUnitViewTable.addReference("type", "type", "organizationUnitTypeView", false);
+		organizationUnitViewTable.addText("icon", "icon");
+		organizationUnitViewTable.addEnum("orgUnitLifeCycleStatus", "Org unit life cycle status", "orgUnitLifeCycleStatus");
+		organizationUnitViewTable.addReference("address", "address", "addressView", false);
 
-		applicationVersionData
-				.addText("data")
-				.addInteger("dataRows")
-				.addText("dataAdded")
-				.addInteger("dataAddedRows")
-				.addText("dataRemoved")
-				.addInteger("dataRemovedRows")
-		;
+		organizationUnitTypeViewTable.addTranslatableText("name", "name");
+		organizationUnitTypeViewTable.addTranslatableText("abbreviation", "abbreviation");
+		organizationUnitTypeViewTable.addText("icon", "icon");
+		organizationUnitTypeViewTable.addBoolean("translateOrganizationUnits", "Translate organization units");
+		organizationUnitTypeViewTable.addBoolean("allowUserContainer", "Allow user container");
+		organizationUnitTypeViewTable.addReference("defaultChildType", "Default child type", "organizationUnitTypeView", false);
+		organizationUnitTypeViewTable.addMultiReference("possibleChildrenTypes", "Possible children types", "organizationUnitTypeView", false);
+		organizationUnitTypeViewTable.addEnum("geoLocationType", "Geo location type", "geoLocationType");
 
-		managedApplication
-				.addReference("mainApplication", application, false, "installedAsMainApplication")
-				.addReference("organizationField", organizationField, false)
-				.addText("icon")
-				.addText("titleKey")
-				.addText("descriptionKey")
-				.addBoolean("singleApplication")
-				.addBoolean("darkTheme")
-				.addBoolean("startOnLogin")
-				.addReference("perspectives", managedApplicationPerspective, true, "managedApplication", true)
-				.addInteger("listingPosition")
-				.addBoolean("toolbarApplicationMenu")
-				.addReference("applicationGroup", managedApplicationGroup, false, "applications")
-				.addBoolean("hidden")
-		;
+		organizationFieldViewTable.addTranslatableText("title", "title");
+		organizationFieldViewTable.addText("icon", "icon");
 
-		managedApplicationPerspective
-				.addReference("managedApplication", managedApplication, false, "perspectives")
-				.addReference("applicationPerspective", applicationPerspective, false, "managedPerspectives")
-				.addText("iconOverride")
-				.addText("titleKeyOverride")
-				.addText("descriptionKeyOverride")
-				.addBoolean("toolbarPerspectiveMenu")
-				.addInteger("listingPosition")
-		;
+		addressViewTable.addText("name", "name");
+		addressViewTable.addText("organisation", "organisation");
+		addressViewTable.addText("street", "street");
+		addressViewTable.addText("city", "city");
+		addressViewTable.addText("dependentLocality", "Dependent locality");
+		addressViewTable.addText("state", "state");
+		addressViewTable.addText("postalCode", "Postal code");
+		addressViewTable.addText("country", "country");
+		addressViewTable.addFloat("latitude", "latitude");
+		addressViewTable.addFloat("longitude", "longitude");
 
-		managedApplicationGroup
-				.addText("icon")
-				.addText("name")
-				.addText("titleKey") //.addTranslatableText("title")
-				.addReference("applications", managedApplication, true, "applicationGroup")
-				.addInteger("listingPosition")
-		;
+		userViewTable.addText("firstName", "First name");
+		userViewTable.addText("firstNameTranslated", "First name translated");
+		userViewTable.addText("lastName", "Last name");
+		userViewTable.addText("lastNameTranslated", "Last name translated");
+		userViewTable.addByteArray("profilePicture", "Profile picture");
+		userViewTable.addByteArray("profilePictureLarge", "Profile picture large");
+		userViewTable.addText("language", "language");
+		userViewTable.addReference("organizationUnit", "Organization unit", "organizationUnitView", false);
 
-		localizationKey
-				.addReference("application", application, false)
-				.addText("key")
-				.addBoolean("used")
-				.addEnum("localizationKeyFormat", "singleLine", "multiLine", "formatted")
-				.addEnum("localizationKeyType", "applicationResourceKey", "dictionaryKey", "reportingKey", "systemKey")
-				.addText("comments")
-				.addReference("localizationValues", localizationValue, true, "localizationKey")
-				.addReference("topics", localizationTopic, true, "keys")
-		;
+		roleTable.addTranslatableText("title", "title");
+		roleTable.addText("icon", "icon");
+		roleTable.addEnum("roleType", "Role type", "roleType");
+		roleTable.addReference("parent", "parent", "role", false);
+		roleTable.addMultiReference("children", "children", "role", false);
+		roleTable.addReference("organizationUnit", "Organization unit", "organizationUnit", false);
+		roleTable.addMultiReference("allowedOrganizationUnitTypes", "Allowed organization unit types", "organizationUnitType", false);
+		roleTable.addReference("organizationField", "Organization field", "organizationField", false);
+		roleTable.addBoolean("delegatedCustomPrivilegeObjectRole", "Delegated custom privilege object role");
+		roleTable.addMultiReference("generalizationRoles", "Generalization roles", "role", false);
+		roleTable.addMultiReference("specializationRoles", "Specialization roles", "role", false);
+		roleTable.addMultiReference("privilegesReceivingRoles", "Privileges receiving roles", "role", false);
+		roleTable.addMultiReference("privilegesSendingRoles", "Privileges sending roles", "role", false);
+		roleTable.addBoolean("noDirectMemberships", "No direct memberships");
+		roleTable.addMultiReference("userRoleAssignments", "User role assignments", "userRoleAssignment", true);
+		roleTable.addMultiReference("privilegeAssignments", "Privilege assignments", "rolePrivilegeAssignment", true);
+		roleTable.addMultiReference("applicationRoleAssignments", "Application role assignments", "roleApplicationRoleAssignment", true);
 
-		localizationValue
-				.addReference("localizationKey", localizationKey, false, "localizationValues")
-				.addText("language")
-				.addText("original")
-				.addText("machineTranslation")
-				.addText("translation")
-				.addText("adminLocalOverride") //override only this translation
-				.addText("adminKeyOverride") //override all translations
-				.addText("currentDisplayValue")
-				.addText("notes")
-				.addEnum("machineTranslationState", "translationRequested", "ok", "failed", "notNecessary")
-				.addEnum("translationState", "translationRequested", "ok", "unclear", "notNecessary")
-				.addEnum("translationVerificationState", "notYetTranslated", "verificationRequested", "ok", "correctionsRequired", "notNecessary")
-		;
+		userRoleAssignmentTable.addReference("user", "user", "user", false);
+		userRoleAssignmentTable.addReference("role", "role", "role", false);
+		userRoleAssignmentTable.addReference("organizationUnit", "Organization unit", "organizationUnit", false);
+		userRoleAssignmentTable.addInteger("delegatedCustomPrivilegeObjectId", "Delegated custom privilege object id");
+		userRoleAssignmentTable.addBoolean("mainResponsible", "Main responsible");
+		userRoleAssignmentTable.addTimestamp("lastVerified", "Last verified");
+		userRoleAssignmentTable.addReference("lastVerifiedBy", "Last verified by", "user", false);
 
-		localizationTopic
-				.addReference("keys", localizationKey, true, "topics")
-				.addReference("application", application, false)
-				.addText("icon")
-				.addText("title")
-				.addFile("screenshot")
-		;
+		rolePrivilegeAssignmentTable.addReference("role", "role", "role", false);
+		rolePrivilegeAssignmentTable.addReference("application", "application", "application", false);
+		rolePrivilegeAssignmentTable.addReference("privilegeGroup", "Privilege group", "applicationPrivilegeGroup", false);
+		rolePrivilegeAssignmentTable.addMultiReference("privileges", "privileges", "applicationPrivilege", false);
+		rolePrivilegeAssignmentTable.addText("privilegeObjects", "Privilege objects");
+		rolePrivilegeAssignmentTable.addBoolean("privilegeObjectInheritance", "Privilege object inheritance");
+		rolePrivilegeAssignmentTable.addReference("organizationFieldFilter", "Organization field filter", "organizationField", false);
+		rolePrivilegeAssignmentTable.addReference("fixedOrganizationRoot", "Fixed organization root", "organizationUnit", false);
+		rolePrivilegeAssignmentTable.addMultiReference("organizationUnitTypeFilter", "Organization unit type filter", "organizationUnitType", false);
+		rolePrivilegeAssignmentTable.addBoolean("noInheritanceOfOrganizationalUnits", "Noinheritance of organizational units");
 
-		login
-				.addReference("user", user, false)
-				.addText("ip")
-				.addText("userAgent")
-				.addBoolean("mobileDevice")
-				.addText("screenSize")
-				.addTimestamp("dateLogin")
-				.addTimestamp("dateLogout")
-				.addInteger("activityCount")
-				.addInteger("applicationOpenCount")
-		;
+		roleApplicationRoleAssignmentTable.addReference("role", "role", "role", false);
+		roleApplicationRoleAssignmentTable.addReference("application", "application", "application", false);
+		roleApplicationRoleAssignmentTable.addText("applicationRoleName", "Application role name");
+		roleApplicationRoleAssignmentTable.addReference("organizationFieldFilter", "Organization field filter", "organizationField", false);
+		roleApplicationRoleAssignmentTable.addReference("fixedOrganizationRoot", "Fixed organization root", "organizationUnit", false);
+		roleApplicationRoleAssignmentTable.addMultiReference("organizationUnitTypeFilter", "Organization unit type filter", "organizationUnitType", false);
+		roleApplicationRoleAssignmentTable.addBoolean("noInheritanceOfOrganizationalUnits", "Noinheritance of organizational units");
 
+		systemSettingsTable.addText("allowedBaseLanguages", "Allowed base languages");
 
+		systemLogTable.addReference("managedApplication", "Managed application", "managedApplication", false);
+		systemLogTable.addReference("managedPerspective", "Managed perspective", "managedApplicationPerspective", false);
+		systemLogTable.addReference("application", "application", "application", false);
+		systemLogTable.addReference("applicationPerspective", "Application perspective", "applicationPerspective", false);
+		systemLogTable.addReference("applicationVersion", "Application version", "applicationVersion", false);
+		systemLogTable.addEnum("logLevel", "Log level", "logLevel");
+		systemLogTable.addText("thread", "thread");
+		systemLogTable.addText("message", "message");
+		systemLogTable.addText("details", "details");
+		systemLogTable.addText("exceptionClass", "Exception class");
 
-		userLanguageSettings
-				.addText("language")
-				.addEnum("languageSkillLevel", "motherTongue", "Excellent", "Good", "Unknown")
-		;
+		applicationTable.addText("name", "name");
+		applicationTable.addText("icon", "icon");
+		applicationTable.addText("titleKey", "Title key");
+		applicationTable.addText("descriptionKey", "Description key");
+		applicationTable.addBoolean("uninstalled", "uninstalled");
+		applicationTable.addBoolean("unmanagedApplication", "Unmanaged application");
+		applicationTable.addText("config", "config");
+		applicationTable.addBoolean("darkTheme", "Dark theme");
+		applicationTable.addMultiReference("perspectives", "perspectives", "applicationPerspective", true);
+		applicationTable.addMultiReference("privilegeGroups", "Privilege groups", "applicationPrivilegeGroup", false);
+		applicationTable.addMultiReference("versions", "versions", "applicationVersion", false);
+		applicationTable.addReference("installedVersion", "Installed version", "applicationVersion", false);
+		applicationTable.addMultiReference("installedAsMainApplication", "Installed as main application", "managedApplication", false);
 
+		applicationPerspectiveTable.addReference("application", "application", "application", false);
+		applicationPerspectiveTable.addText("name", "name");
+		applicationPerspectiveTable.addText("icon", "icon");
+		applicationPerspectiveTable.addText("titleKey", "Title key");
+		applicationPerspectiveTable.addText("descriptionKey", "Description key");
+		applicationPerspectiveTable.addBoolean("autoProvision", "Auto provision");
+		applicationPerspectiveTable.addBoolean("toolbarPerspectiveMenu", "Toolbar perspective menu");
+		applicationPerspectiveTable.addMultiReference("managedPerspectives", "Managed perspectives", "managedApplicationPerspective", true);
 
-		userLoginStats
-				.addReference("user", user, false, "loginStats")
-				.addTimestamp("firstLogin")
-				.addTimestamp("lastLogin")
-				.addInteger("loginCount")
-				.addTimestamp("lastLoginIpAddress")
-				.addTimestamp("wrongPasswordTimestamp")
-				.addTimestamp("wrongPasswordIpAddress")
-				.addInteger("wrongPasswordCount")
-				;
+		applicationPrivilegeGroupTable.addReference("application", "application", "application", false);
+		applicationPrivilegeGroupTable.addEnum("applicationPrivilegeGroupType", "Application privilege group type", "applicationPrivilegeGroupType");
+		applicationPrivilegeGroupTable.addText("name", "name");
+		applicationPrivilegeGroupTable.addText("icon", "icon");
+		applicationPrivilegeGroupTable.addText("titleKey", "Title key");
+		applicationPrivilegeGroupTable.addText("descriptionKey", "Description key");
+		applicationPrivilegeGroupTable.addMultiReference("privileges", "privileges", "applicationPrivilege", false);
 
-		user
-				.addText("firstName")
-				.addText("firstNameTranslated")
-				.addText("lastName")
-				.addText("lastNameTranslated")
-				.addBinary("profilePicture")
-				.addBinary("profilePictureLarge")
-				.addText("displayLanguage")
-				.addText("email")
-				.addText("mobile")
-				.addText("phone")
-				.addText("login")
-				.addTimestamp("lastLogin") //todo replace with userLoginStats
-				.addText("password")
-				.addText("theme")
-				.addBoolean("darkTheme")
-				.addEnum("userAccountStatus", "active", "inactive", "superAdmin")
-				.addReference("address", address, false)
-				.addReference("organizationUnit", organizationUnit, false, "users")
-				.addReference("accessTokens", userAccessToken, true, "user", true)
-				.addReference("roleAssignments", userRoleAssignment, true, "user", true)
-				.addReference("languageSettings", userLanguageSettings, true)
-				.addReference("loginStats", userLoginStats, false, "user")
-		;
+		applicationPrivilegeTable.addReference("privilegeGroup", "Privilege group", "applicationPrivilegeGroup", false);
+		applicationPrivilegeTable.addText("name", "name");
+		applicationPrivilegeTable.addText("icon", "icon");
+		applicationPrivilegeTable.addText("titleKey", "Title key");
 
-		userView
-				.addText("firstName")
-				.addText("firstNameTranslated")
-				.addText("lastName")
-				.addText("lastNameTranslated")
-				.addBinary("profilePicture")
-				.addBinary("profilePictureLarge")
-				.addText("language")
-				.addReference("organizationUnit", organizationUnitView, false)
-		;
+		applicationVersionTable.addReference("application", "application", "application", false);
+		applicationVersionTable.addFile("binary", "binary", true, 100000, false);
+		applicationVersionTable.addText("binaryHash", "Binary hash");
+		applicationVersionTable.addText("version", "version");
+		applicationVersionTable.addText("releaseNotes", "Release notes");
+		applicationVersionTable.addReference("dataModelData", "Data model data", "applicationVersionData", false);
+		applicationVersionTable.addReference("localizationData", "Localization data", "applicationVersionData", false);
+		applicationVersionTable.addReference("privilegeData", "Privilege data", "applicationVersionData", false);
+		applicationVersionTable.addReference("perspectiveData", "Perspective data", "applicationVersionData", false);
 
-		userAccessToken
-				.addReference("user", user, false, "accessTokens")
-				.addText("userAgentOnCreation")
-				.addText("userAgentLastUsed")
-				.addTimestamp("lastUsed")
-				.addBoolean("valid")
-				.addBoolean("restApi")
-				.addText("secureToken")
-		;
+		applicationVersionDataTable.addText("data", "data");
+		applicationVersionDataTable.addInteger("dataRows", "Data rows");
+		applicationVersionDataTable.addText("dataAdded", "Data added");
+		applicationVersionDataTable.addInteger("dataAddedRows", "Data added rows");
+		applicationVersionDataTable.addText("dataRemoved", "Data removed");
+		applicationVersionDataTable.addInteger("dataRemovedRows", "Data removed rows");
 
-		/*
-			https://github.com/google/libaddressinput/blob/master/common/src/main/java/com/google/i18n/addressinput/common/RegionDataConstants.java
-			https://github.com/google/libaddressinput/wiki/AddressValidationMetadata
+		managedApplicationTable.addReference("mainApplication", "Main application", "application", false);
+		managedApplicationTable.addReference("organizationField", "Organization field", "organizationField", false);
+		managedApplicationTable.addText("icon", "icon");
+		managedApplicationTable.addText("titleKey", "Title key");
+		managedApplicationTable.addText("descriptionKey", "Description key");
+		managedApplicationTable.addBoolean("singleApplication", "Single application");
+		managedApplicationTable.addBoolean("darkTheme", "Dark theme");
+		managedApplicationTable.addBoolean("startOnLogin", "Start on login");
+		managedApplicationTable.addMultiReference("perspectives", "perspectives", "managedApplicationPerspective", true);
+		managedApplicationTable.addInteger("listingPosition", "Listing position");
+		managedApplicationTable.addBoolean("toolbarApplicationMenu", "Toolbar application menu");
+		managedApplicationTable.addReference("applicationGroup", "Application group", "managedApplicationGroup", false);
+		managedApplicationTable.addBoolean("hidden", "hidden");
 
-			N – Name
-			O – Organisation
-			A – Street Address Line(s)
-			D – Dependent locality (may be an inner-city district or a suburb)
-			C – City or Locality
-			S – Administrative area such as a state, province, island etc
-			Z – Zip or postal code
+		managedApplicationPerspectiveTable.addReference("managedApplication", "Managed application", "managedApplication", false);
+		managedApplicationPerspectiveTable.addReference("applicationPerspective", "Application perspective", "applicationPerspective", false);
+		managedApplicationPerspectiveTable.addText("iconOverride", "Icon override");
+		managedApplicationPerspectiveTable.addText("titleKeyOverride", "Title key override");
+		managedApplicationPerspectiveTable.addText("descriptionKeyOverride", "Description key override");
+		managedApplicationPerspectiveTable.addBoolean("toolbarPerspectiveMenu", "Toolbar perspective menu");
+		managedApplicationPerspectiveTable.addInteger("listingPosition", "Listing position");
 
-		 */
+		managedApplicationGroupTable.addText("icon", "icon");
+		managedApplicationGroupTable.addText("name", "name");
+		managedApplicationGroupTable.addText("titleKey", "Title key");
+		managedApplicationGroupTable.addMultiReference("applications", "applications", "managedApplication", false);
+		managedApplicationGroupTable.addInteger("listingPosition", "Listing position");
 
-		address
-				.addText("name") //N
-				.addText("organisation") //O
-				.addText("street") //A
-				.addText("city") //C //City/Town/Village
-				.addText("dependentLocality") //D
-				.addText("state") //S  //State/Province/County
-				.addText("postalCode") //Z //ZIP code/Postal code
-				.addText("country")
-				.addFloat("latitude")
-				.addFloat("longitude")
-		;
+		localizationKeyTable.addReference("application", "application", "application", false);
+		localizationKeyTable.addText("key", "key");
+		localizationKeyTable.addBoolean("used", "used");
+		localizationKeyTable.addEnum("localizationKeyFormat", "Localization key format", "localizationKeyFormat");
+		localizationKeyTable.addEnum("localizationKeyType", "Localization key type", "localizationKeyType");
+		localizationKeyTable.addText("comments", "comments");
+		localizationKeyTable.addMultiReference("localizationValues", "Localization values", "localizationValue", false);
+		localizationKeyTable.addMultiReference("topics", "topics", "localizationTopic", false);
 
-		addressView
-				.addText("name") //N
-				.addText("organisation") //O
-				.addText("street") //A
-				.addText("city") //C //City/Town/Village
-				.addText("dependentLocality") //D
-				.addText("state") //S  //State/Province/County
-				.addText("postalCode") //Z //ZIP code/Postal code
-				.addText("country")
-				.addFloat("latitude")
-				.addFloat("longitude")
-		;
+		localizationValueTable.addReference("localizationKey", "Localization key", "localizationKey", false);
+		localizationValueTable.addText("language", "language");
+		localizationValueTable.addText("original", "original");
+		localizationValueTable.addText("machineTranslation", "Machine translation");
+		localizationValueTable.addText("translation", "translation");
+		localizationValueTable.addText("adminLocalOverride", "Admin local override");
+		localizationValueTable.addText("adminKeyOverride", "Admin key override");
+		localizationValueTable.addText("currentDisplayValue", "Current display value");
+		localizationValueTable.addText("notes", "notes");
+		localizationValueTable.addEnum("machineTranslationState", "Machine translation state", "machineTranslationState");
+		localizationValueTable.addEnum("translationState", "Translation state", "translationState");
+		localizationValueTable.addEnum("translationVerificationState", "Translation verification state", "translationVerificationState");
 
-		organizationUnit
-				.addTranslatableText("name")
-				.addReference("parent", organizationUnit, false, "children")
-				.addReference("children", organizationUnit, true, "parent")
-				.addReference("type", organizationUnitType, false)
-				.addText("icon")
-				.addEnum("orgUnitLifeCycleStatus", "active", "inactive", "prepareDeletion")
-				.addReference("address", address, false)
-				.addReference("users", user, true, "organizationUnit")
-				.addReference("userRoleAssignments", userRoleAssignment, true, "organizationUnit")
-		;
+		localizationTopicTable.addMultiReference("keys", "keys", "localizationKey", false);
+		localizationTopicTable.addReference("application", "application", "application", false);
+		localizationTopicTable.addText("icon", "icon");
+		localizationTopicTable.addText("title", "title");
+		localizationTopicTable.addFile("screenshot", "screenshot", true, 100000, false);
 
-		organizationUnitView
-				.addTranslatableText("name")
-				.addReference("parent", organizationUnitView, false, "children")
-				.addReference("children", organizationUnitView, true, "parent")
-				.addReference("type", organizationUnitTypeView, false)
-				.addText("icon")
-				.addEnum("orgUnitLifeCycleStatus", "active", "inactive", "prepareDeletion")
-				.addReference("address", addressView, false)
-		;
+		newsBoardMessageTable.addBoolean("published", "published");
+		newsBoardMessageTable.addText("htmlMessage", "Html message");
+		newsBoardMessageTable.addText("language", "language");
+		newsBoardMessageTable.addMultiReference("images", "images", "newsBoardMessageImage", true);
+		newsBoardMessageTable.addMultiReference("translations", "translations", "newsBoardMessageTranslation", true);
+		newsBoardMessageTable.addReference("organizationField", "Organization field", "organizationField", false);
+		newsBoardMessageTable.addReference("organizationUnit", "Organization unit", "organizationUnit", false);
 
+		newsBoardMessageImageTable.addFile("file", "file", true, 100000, false);
+		newsBoardMessageImageTable.addFile("thumbnail", "thumbnail", true, 100000, false);
+		newsBoardMessageImageTable.addText("fileName", "File name");
+		newsBoardMessageImageTable.addBoolean("embedded", "embedded");
+		newsBoardMessageImageTable.addInteger("position", "position");
 
-		organizationUnitType
-				.addTranslatableText("name")
-				.addTranslatableText("abbreviation")
-				.addText("icon")
-				.addBoolean("translateOrganizationUnits")
-				.addBoolean("allowUsers")
-				.addReference("defaultChildType", organizationUnitType, false)
-				.addReference("possibleChildrenTypes", organizationUnitType, true)
-				.addEnum("geoLocationType", "country", "state", "city", "place", "none")
-		;
+		newsBoardMessageTranslationTable.addReference("message", "message", "newsBoardMessage", false);
+		newsBoardMessageTranslationTable.addText("language", "language");
+		newsBoardMessageTranslationTable.addText("translation", "translation");
 
-		organizationUnitTypeView
-				.addTranslatableText("name")
-				.addTranslatableText("abbreviation")
-				.addText("icon")
-				.addBoolean("translateOrganizationUnits")
-				.addBoolean("allowUserContainer")
-				.addReference("defaultChildType", organizationUnitTypeView, false)
-				.addReference("possibleChildrenTypes", organizationUnitTypeView, true)
-				.addEnum("geoLocationType", "country", "state", "city", "place", "none")
-		;
+		model.addReverseReferenceField(userTable, "organizationUnit", organizationUnitTable, "users");
+		model.addReverseReferenceField(userTable, "accessTokens", userAccessTokenTable, "user");
+		model.addReverseReferenceField(userTable, "roleAssignments", userRoleAssignmentTable, "user");
+		model.addReverseReferenceField(userTable, "loginStats", userLoginStatsTable, "user");
+		model.addReverseReferenceField(userAccessTokenTable, "user", userTable, "accessTokens");
+		model.addReverseReferenceField(userLoginStatsTable, "user", userTable, "loginStats");
+		model.addReverseReferenceField(organizationUnitTable, "parent", organizationUnitTable, "children");
+		model.addReverseReferenceField(organizationUnitTable, "children", organizationUnitTable, "parent");
+		model.addReverseReferenceField(organizationUnitTable, "users", userTable, "organizationUnit");
+		model.addReverseReferenceField(organizationUnitTable, "userRoleAssignments", userRoleAssignmentTable, "organizationUnit");
+		model.addReverseReferenceField(roleTable, "parent", roleTable, "children");
+		model.addReverseReferenceField(roleTable, "children", roleTable, "parent");
+		model.addReverseReferenceField(roleTable, "generalizationRoles", roleTable, "specializationRoles");
+		model.addReverseReferenceField(roleTable, "specializationRoles", roleTable, "generalizationRoles");
+		model.addReverseReferenceField(roleTable, "privilegesReceivingRoles", roleTable, "privilegesSendingRoles");
+		model.addReverseReferenceField(roleTable, "privilegesSendingRoles", roleTable, "privilegesReceivingRoles");
+		model.addReverseReferenceField(roleTable, "userRoleAssignments", userRoleAssignmentTable, "role");
+		model.addReverseReferenceField(roleTable, "privilegeAssignments", rolePrivilegeAssignmentTable, "role");
+		model.addReverseReferenceField(roleTable, "applicationRoleAssignments", roleApplicationRoleAssignmentTable, "role");
+		model.addReverseReferenceField(userRoleAssignmentTable, "user", userTable, "roleAssignments");
+		model.addReverseReferenceField(userRoleAssignmentTable, "role", roleTable, "userRoleAssignments");
+		model.addReverseReferenceField(userRoleAssignmentTable, "organizationUnit", organizationUnitTable, "userRoleAssignments");
+		model.addReverseReferenceField(rolePrivilegeAssignmentTable, "role", roleTable, "privilegeAssignments");
+		model.addReverseReferenceField(roleApplicationRoleAssignmentTable, "role", roleTable, "applicationRoleAssignments");
+		model.addReverseReferenceField(applicationTable, "perspectives", applicationPerspectiveTable, "application");
+		model.addReverseReferenceField(applicationTable, "privilegeGroups", applicationPrivilegeGroupTable, "application");
+		model.addReverseReferenceField(applicationTable, "versions", applicationVersionTable, "application");
+		model.addReverseReferenceField(applicationTable, "installedAsMainApplication", managedApplicationTable, "mainApplication");
+		model.addReverseReferenceField(applicationPerspectiveTable, "application", applicationTable, "perspectives");
+		model.addReverseReferenceField(applicationPerspectiveTable, "managedPerspectives", managedApplicationPerspectiveTable, "applicationPerspective");
+		model.addReverseReferenceField(applicationPrivilegeGroupTable, "application", applicationTable, "privilegeGroups");
+		model.addReverseReferenceField(applicationPrivilegeGroupTable, "privileges", applicationPrivilegeTable, "privilegeGroup");
+		model.addReverseReferenceField(applicationPrivilegeTable, "privilegeGroup", applicationPrivilegeGroupTable, "privileges");
+		model.addReverseReferenceField(applicationVersionTable, "application", applicationTable, "versions");
+		model.addReverseReferenceField(managedApplicationTable, "mainApplication", applicationTable, "installedAsMainApplication");
+		model.addReverseReferenceField(managedApplicationTable, "perspectives", managedApplicationPerspectiveTable, "managedApplication");
+		model.addReverseReferenceField(managedApplicationTable, "applicationGroup", managedApplicationGroupTable, "applications");
+		model.addReverseReferenceField(managedApplicationPerspectiveTable, "managedApplication", managedApplicationTable, "perspectives");
+		model.addReverseReferenceField(managedApplicationPerspectiveTable, "applicationPerspective", applicationPerspectiveTable, "managedPerspectives");
+		model.addReverseReferenceField(managedApplicationGroupTable, "applications", managedApplicationTable, "applicationGroup");
+		model.addReverseReferenceField(localizationKeyTable, "localizationValues", localizationValueTable, "localizationKey");
+		model.addReverseReferenceField(localizationKeyTable, "topics", localizationTopicTable, "keys");
+		model.addReverseReferenceField(localizationValueTable, "localizationKey", localizationKeyTable, "localizationValues");
+		model.addReverseReferenceField(localizationTopicTable, "keys", localizationKeyTable, "topics");
+		model.addReverseReferenceField(newsBoardMessageTable, "translations", newsBoardMessageTranslationTable, "message");
+		model.addReverseReferenceField(newsBoardMessageTranslationTable, "message", newsBoardMessageTable, "translations");
 
-		organizationField
-				.addTranslatableText("title")
-				.addText("icon")
-		;
-
-		organizationFieldView
-				.addTranslatableText("title")
-				.addText("icon")
-		;
-
-		role
-				.addTranslatableText("title")
-				.addText("icon")
-				.addEnum("roleType", "leader", "assistant", "mentor", "administrator", "other")
-				.addReference("parent", role, false, "children")
-				.addReference("children", role, true, "parent")
-				.addReference("organizationUnit", organizationUnit, false)
-				.addReference("allowedOrganizationUnitTypes", organizationUnitType, true)
-				.addReference("organizationField", organizationField, false)
-				.addBoolean("delegatedCustomPrivilegeObjectRole")
-				.addReference("generalizationRoles", role, true, "specializationRoles")
-				.addReference("specializationRoles", role, true, "generalizationRoles")
-				.addReference("privilegesReceivingRoles", role, true, "privilegesSendingRoles")
-				.addReference("privilegesSendingRoles", role, true, "privilegesReceivingRoles")
-				.addBoolean("noDirectMemberships")
-				.addReference("userRoleAssignments", userRoleAssignment, true, "role", true)
-				.addReference("privilegeAssignments", rolePrivilegeAssignment, true, "role", true)
-				.addReference("applicationRoleAssignments", roleApplicationRoleAssignment, true, "role", true)
-		;
-
-		userRoleAssignment
-				.addReference("user", user, false, "roleAssignments")
-				.addReference("role", role, false, "userRoleAssignments")
-				.addReference("organizationUnit", organizationUnit, false, "userRoleAssignments")
-				.addInteger("delegatedCustomPrivilegeObjectId")
-				.addBoolean("mainResponsible")
-				.addTimestamp("lastVerified")
-				.addReference("lastVerifiedBy", user, false)
-		;
-
-		rolePrivilegeAssignment
-				.addReference("role", role, false, "privilegeAssignments")
-				.addReference("application", application, false)
-				.addReference("privilegeGroup", applicationPrivilegeGroup, false)
-				.addReference("privileges", applicationPrivilege, true)
-				.addText("privilegeObjects")
-				.addBoolean("privilegeObjectInheritance")
-				.addReference("organizationFieldFilter", organizationField, false)
-				.addReference("fixedOrganizationRoot", organizationUnit, false)
-				.addReference("organizationUnitTypeFilter", organizationUnitType, true)
-				.addBoolean("noInheritanceOfOrganizationalUnits")
-		;
-
-		roleApplicationRoleAssignment
-				.addReference("role", role, false, "applicationRoleAssignments")
-				.addReference("application", application, false)
-				.addText("applicationRoleName")
-				.addReference("organizationFieldFilter", organizationField, false)
-				.addReference("fixedOrganizationRoot", organizationUnit, false)
-				.addReference("organizationUnitTypeFilter", organizationUnitType, true)
-				.addBoolean("noInheritanceOfOrganizationalUnits")
-		;
-
-		return schema;
+		return model;
 	}
+
 }
