@@ -30,7 +30,7 @@ public class Model implements ModelProvider {
 
 	@Override
 	public DatabaseModel getModel() {
-		DatabaseModel model = new DatabaseModel("controlCenter", "Control center", "org.teamapps.model");
+		DatabaseModel model = new DatabaseModel("controlCenter", "Control center", "org.teamapps.model", "coreSystemModel");
 		model.setPojoBuildTime(1686232224912L);
 		model.createEnum("userAccountStatus", "User account status", Arrays.asList("active", "inactive", "superAdmin"), Arrays.asList("active", "inactive", "Super admin"));
 		model.createEnum("languageSkillLevel", "Language skill level", Arrays.asList("motherTongue", "excellent", "good", "unknown"), Arrays.asList("Mother tongue", "Excellent", "Good", "Unknown"));
