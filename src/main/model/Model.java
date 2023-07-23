@@ -74,7 +74,7 @@ public class Model implements ModelProvider {
 		TableModel user = model.createTable("user", "user", true, true, true);
 		TableModel userAcceptedPolicy = model.createTable("userAcceptedPolicy", "User accepted policy", true, true, true);
 		TableModel userAcceptedPolicyEntries = model.createTable("userAcceptedPolicyEntries", "User accepted policy entries", true, true, true);
-		TableModel userAccessToken = model.createTable("userAccessToken", "User access token", false, false, true);
+		TableModel userAccessToken = model.createTable("userAccessToken", "User access token", true, false, false);
 		TableModel userLanguageSettings = model.createTable("userLanguageSettings", "User language settings", true, true, true);
 		TableModel userLoginStats = model.createTable("userLoginStats", "User login stats", false, false, false);
 		TableModel userRoleAssignment = model.createTable("userRoleAssignment", "User role assignment", true, true, true);
