@@ -32,22 +32,22 @@ public class Model implements ModelProvider {
 	@Override
 	public DatabaseModel getModel() {
 		DatabaseModel model = new DatabaseModel("controlCenter", "Control center", "org.teamapps.model", "coreSystemModel");
-		model.setPojoBuildTime(1687083703603L);
+		model.setPojoBuildTime(1690360218187L);
 		EnumModel applicationPrivilegeGroupType = model.createEnum("applicationPrivilegeGroupType", "Application privilege group type", Arrays.asList("simplePrivilege", "simpleOrganizationalPrivilege", "simpleCustomObjectPrivilege", "standardPrivilegeGroup", "organizationalPrivilegeGroup", "customObjectPrivilegeGroup", "roleAssignmentDelegatedCustomPrivilegeGroup"), Arrays.asList("Simple privilege", "Simple organizational privilege", "Simple custom object privilege", "Standard privilege group", "Organizational privilege group", "Custom object privilege group", "Role assignment delegated custom privilege group"));
-		EnumModel geoLocationType = model.createEnum("geoLocationType", "Geo location type", Arrays.asList("country", "state", "city", "place", "none"), Arrays.asList("country", "state", "city", "place", "none"));
+		EnumModel geoLocationType = model.createEnum("geoLocationType", "Geo location type", Arrays.asList("country", "state", "city", "place", "none"), Arrays.asList("Country", "State", "City", "Place", "None"));
 		EnumModel languageSkillLevel = model.createEnum("languageSkillLevel", "Language skill level", Arrays.asList("motherTongue", "excellent", "good", "unknown"), Arrays.asList("Mother tongue", "Excellent", "Good", "Unknown"));
-		EnumModel localizationKeyFormat = model.createEnum("localizationKeyFormat", "Localization key format", Arrays.asList("singleLine", "multiLine", "formatted"), Arrays.asList("Single line", "Multi line", "formatted"));
+		EnumModel localizationKeyFormat = model.createEnum("localizationKeyFormat", "Localization key format", Arrays.asList("singleLine", "multiLine", "formatted"), Arrays.asList("Single line", "Multi line", "Formatted"));
 		EnumModel localizationKeyType = model.createEnum("localizationKeyType", "Localization key type", Arrays.asList("applicationResourceKey", "dictionaryKey", "reportingKey", "systemKey"), Arrays.asList("Application resource key", "Dictionary key", "Reporting key", "System key"));
-		EnumModel logLevel = model.createEnum("logLevel", "Log level", Arrays.asList("info", "warning", "error"), Arrays.asList("info", "warning", "error"));
-		EnumModel machineTranslationState = model.createEnum("machineTranslationState", "Machine translation state", Arrays.asList("translationRequested", "ok", "failed", "notNecessary"), Arrays.asList("Translation requested", "ok", "failed", "Not necessary"));
-		EnumModel orgUnitLifeCycleStatus = model.createEnum("orgUnitLifeCycleStatus", "Org unit life cycle status", Arrays.asList("active", "inactive", "prepareDeletion"), Arrays.asList("active", "inactive", "Prepare deletion"));
-		EnumModel roleType = model.createEnum("roleType", "Role type", Arrays.asList("leader", "assistant", "mentor", "administrator", "other"), Arrays.asList("leader", "assistant", "mentor", "administrator", "other"));
-		EnumModel translationState = model.createEnum("translationState", "Translation state", Arrays.asList("translationRequested", "ok", "unclear", "notNecessary"), Arrays.asList("Translation requested", "ok", "unclear", "Not necessary"));
-		EnumModel translationVerificationState = model.createEnum("translationVerificationState", "Translation verification state", Arrays.asList("notYetTranslated", "verificationRequested", "ok", "correctionsRequired", "notNecessary"), Arrays.asList("Not yet translated", "Verification requested", "ok", "Corrections required", "Not necessary"));
-		EnumModel userAccountStatus = model.createEnum("userAccountStatus", "User account status", Arrays.asList("active", "inactive", "superAdmin"), Arrays.asList("active", "inactive", "Super admin"));
+		EnumModel logLevel = model.createEnum("logLevel", "Log level", Arrays.asList("debug", "info", "warning", "error"), Arrays.asList("Debug", "Info", "Warning", "Error"));
+		EnumModel machineTranslationState = model.createEnum("machineTranslationState", "Machine translation state", Arrays.asList("translationRequested", "ok", "failed", "notNecessary"), Arrays.asList("Translation requested", "Ok", "Failed", "Not necessary"));
+		EnumModel orgUnitLifeCycleStatus = model.createEnum("orgUnitLifeCycleStatus", "Org unit life cycle status", Arrays.asList("active", "inactive", "prepareDeletion", "deleted"), Arrays.asList("Active", "Inactive", "Prepare deletion", "Deleted"));
+		EnumModel roleType = model.createEnum("roleType", "Role type", Arrays.asList("leader", "assistant", "mentor", "administrator", "other"), Arrays.asList("Leader", "Assistant", "Mentor", "Administrator", "Other"));
+		EnumModel translationState = model.createEnum("translationState", "Translation state", Arrays.asList("translationRequested", "ok", "unclear", "notNecessary"), Arrays.asList("Translation requested", "Ok", "Unclear", "Not necessary"));
+		EnumModel translationVerificationState = model.createEnum("translationVerificationState", "Translation verification state", Arrays.asList("notYetTranslated", "verificationRequested", "ok", "correctionsRequired", "notNecessary"), Arrays.asList("Not yet translated", "Verification requested", "Ok", "Corrections required", "Not necessary"));
+		EnumModel userAccountStatus = model.createEnum("userAccountStatus", "User account status", Arrays.asList("active", "inactive", "superAdmin"), Arrays.asList("Active", "Inactive", "Super admin"));
 
-		TableModel address = model.createTable("address", "address", true, true, true);
-		TableModel application = model.createTable("application", "application", true, true, true);
+		TableModel address = model.createTable("address", "Address", true, true, true);
+		TableModel application = model.createTable("application", "Application", true, true, true);
 		TableModel applicationPerspective = model.createTable("applicationPerspective", "Application perspective", true, true, true);
 		TableModel applicationPrivilege = model.createTable("applicationPrivilege", "Application privilege", true, true, true);
 		TableModel applicationPrivilegeGroup = model.createTable("applicationPrivilegeGroup", "Application privilege group", true, true, true);
@@ -56,7 +56,7 @@ public class Model implements ModelProvider {
 		TableModel localizationKey = model.createTable("localizationKey", "Localization key", true, true, true);
 		TableModel localizationTopic = model.createTable("localizationTopic", "Localization topic", true, true, true);
 		TableModel localizationValue = model.createTable("localizationValue", "Localization value", true, true, true);
-		TableModel login = model.createTable("login", "login", false, false, true);
+		TableModel login = model.createTable("login", "Login", false, false, true);
 		TableModel managedApplication = model.createTable("managedApplication", "Managed application", true, true, true);
 		TableModel managedApplicationGroup = model.createTable("managedApplicationGroup", "Managed application group", true, true, true);
 		TableModel managedApplicationPerspective = model.createTable("managedApplicationPerspective", "Managed application perspective", true, true, true);
@@ -66,14 +66,12 @@ public class Model implements ModelProvider {
 		TableModel organizationField = model.createTable("organizationField", "Organization field", true, true, true);
 		TableModel organizationUnit = model.createTable("organizationUnit", "Organization unit", true, true, true);
 		TableModel organizationUnitType = model.createTable("organizationUnitType", "Organization unit type", true, true, true);
-		TableModel role = model.createTable("role", "role", true, true, true);
+		TableModel role = model.createTable("role", "Role", true, true, true);
 		TableModel roleApplicationRoleAssignment = model.createTable("roleApplicationRoleAssignment", "Role application role assignment", true, true, true);
 		TableModel rolePrivilegeAssignment = model.createTable("rolePrivilegeAssignment", "Role privilege assignment", true, true, true);
 		TableModel systemLog = model.createTable("systemLog", "System log", true, true, true);
 		TableModel systemSettings = model.createTable("systemSettings", "System settings", true, true, true);
-		TableModel user = model.createTable("user", "user", true, true, true);
-		TableModel userAcceptedPolicy = model.createTable("userAcceptedPolicy", "User accepted policy", true, true, true);
-		TableModel userAcceptedPolicyEntries = model.createTable("userAcceptedPolicyEntries", "User accepted policy entries", true, true, true);
+		TableModel user = model.createTable("user", "User", true, true, true);
 		TableModel userAccessToken = model.createTable("userAccessToken", "User access token", true, false, false);
 		TableModel userLanguageSettings = model.createTable("userLanguageSettings", "User language settings", true, true, true);
 		TableModel userLoginStats = model.createTable("userLoginStats", "User login stats", false, false, false);
@@ -85,46 +83,45 @@ public class Model implements ModelProvider {
 		TableModel organizationUnitView = model.createRemoteTable("organizationUnitView", "Organization unit view", "organizationUnit", "controlCenter", null);
 		TableModel userView = model.createRemoteTable("userView", "User view", "user", "controlCenter", null);
 
-
-		address.addText("name", "name");
-		address.addText("organisation", "organisation");
-		address.addText("street", "street");
-		address.addText("city", "city");
+		address.addText("name", "Name");
+		address.addText("organisation", "Organisation");
+		address.addText("street", "Street");
+		address.addText("city", "City");
 		address.addText("dependentLocality", "Dependent locality");
-		address.addText("state", "state");
+		address.addText("state", "State");
 		address.addText("postalCode", "Postal code");
-		address.addText("country", "country");
-		address.addFloat("latitude", "latitude");
-		address.addFloat("longitude", "longitude");
+		address.addText("country", "Country");
+		address.addFloat("latitude", "Latitude");
+		address.addFloat("longitude", "Longitude");
 
-		addressView.addText("name", "name");
-		addressView.addText("organisation", "organisation");
-		addressView.addText("street", "street");
-		addressView.addText("city", "city");
+		addressView.addText("name", "Name");
+		addressView.addText("organisation", "Organisation");
+		addressView.addText("street", "Street");
+		addressView.addText("city", "City");
 		addressView.addText("dependentLocality", "Dependent locality");
-		addressView.addText("state", "state");
+		addressView.addText("state", "State");
 		addressView.addText("postalCode", "Postal code");
-		addressView.addText("country", "country");
-		addressView.addFloat("latitude", "latitude");
-		addressView.addFloat("longitude", "longitude");
+		addressView.addText("country", "Country");
+		addressView.addFloat("latitude", "Latitude");
+		addressView.addFloat("longitude", "Longitude");
 
-		application.addText("name", "name");
-		application.addText("icon", "icon");
+		application.addText("name", "Name");
+		application.addText("icon", "Icon");
 		application.addText("titleKey", "Title key");
 		application.addText("descriptionKey", "Description key");
-		application.addBoolean("uninstalled", "uninstalled");
+		application.addBoolean("uninstalled", "Uninstalled");
 		application.addBoolean("unmanagedApplication", "Unmanaged application");
-		application.addText("config", "config");
+		application.addText("config", "Config");
 		application.addBoolean("darkTheme", "Dark theme");
-		application.addMultiReference("perspectives", "perspectives", applicationPerspective, true);
+		application.addMultiReference("perspectives", "Perspectives", applicationPerspective, true);
 		application.addMultiReference("privilegeGroups", "Privilege groups", applicationPrivilegeGroup, false);
-		application.addMultiReference("versions", "versions", applicationVersion, false);
+		application.addMultiReference("versions", "Versions", applicationVersion, false);
 		application.addReference("installedVersion", "Installed version", applicationVersion, false);
 		application.addMultiReference("installedAsMainApplication", "Installed as main application", managedApplication, false);
 
-		applicationPerspective.addReference("application", "application", application, false);
-		applicationPerspective.addText("name", "name");
-		applicationPerspective.addText("icon", "icon");
+		applicationPerspective.addReference("application", "Application", application, false);
+		applicationPerspective.addText("name", "Name");
+		applicationPerspective.addText("icon", "Icon");
 		applicationPerspective.addText("titleKey", "Title key");
 		applicationPerspective.addText("descriptionKey", "Description key");
 		applicationPerspective.addBoolean("autoProvision", "Auto provision");
@@ -132,65 +129,65 @@ public class Model implements ModelProvider {
 		applicationPerspective.addMultiReference("managedPerspectives", "Managed perspectives", managedApplicationPerspective, true);
 
 		applicationPrivilege.addReference("privilegeGroup", "Privilege group", applicationPrivilegeGroup, false);
-		applicationPrivilege.addText("name", "name");
-		applicationPrivilege.addText("icon", "icon");
+		applicationPrivilege.addText("name", "Name");
+		applicationPrivilege.addText("icon", "Icon");
 		applicationPrivilege.addText("titleKey", "Title key");
 
-		applicationPrivilegeGroup.addReference("application", "application", application, false);
+		applicationPrivilegeGroup.addReference("application", "Application", application, false);
 		applicationPrivilegeGroup.addEnum("applicationPrivilegeGroupType", "Application privilege group type", applicationPrivilegeGroupType);
-		applicationPrivilegeGroup.addText("name", "name");
-		applicationPrivilegeGroup.addText("icon", "icon");
+		applicationPrivilegeGroup.addText("name", "Name");
+		applicationPrivilegeGroup.addText("icon", "Icon");
 		applicationPrivilegeGroup.addText("titleKey", "Title key");
 		applicationPrivilegeGroup.addText("descriptionKey", "Description key");
-		applicationPrivilegeGroup.addMultiReference("privileges", "privileges", applicationPrivilege, false);
+		applicationPrivilegeGroup.addMultiReference("privileges", "Privileges", applicationPrivilege, false);
 
-		applicationVersion.addReference("application", "application", application, false);
-		applicationVersion.addFile("binary", "binary", true, 100000, false);
+		applicationVersion.addReference("application", "Application", application, false);
+		applicationVersion.addFile("binary", "Binary", true, 100000, false);
 		applicationVersion.addText("binaryHash", "Binary hash");
-		applicationVersion.addText("version", "version");
+		applicationVersion.addText("version", "Version");
 		applicationVersion.addText("releaseNotes", "Release notes");
 		applicationVersion.addReference("dataModelData", "Data model data", applicationVersionData, false);
 		applicationVersion.addReference("localizationData", "Localization data", applicationVersionData, false);
 		applicationVersion.addReference("privilegeData", "Privilege data", applicationVersionData, false);
 		applicationVersion.addReference("perspectiveData", "Perspective data", applicationVersionData, false);
 
-		applicationVersionData.addText("data", "data");
+		applicationVersionData.addText("data", "Data");
 		applicationVersionData.addInteger("dataRows", "Data rows");
 		applicationVersionData.addText("dataAdded", "Data added");
 		applicationVersionData.addInteger("dataAddedRows", "Data added rows");
 		applicationVersionData.addText("dataRemoved", "Data removed");
 		applicationVersionData.addInteger("dataRemovedRows", "Data removed rows");
 
-		localizationKey.addReference("application", "application", application, false);
-		localizationKey.addText("key", "key");
-		localizationKey.addBoolean("used", "used");
+		localizationKey.addReference("application", "Application", application, false);
+		localizationKey.addText("key", "Key");
+		localizationKey.addBoolean("used", "Used");
 		localizationKey.addEnum("localizationKeyFormat", "Localization key format", localizationKeyFormat);
 		localizationKey.addEnum("localizationKeyType", "Localization key type", localizationKeyType);
-		localizationKey.addText("comments", "comments");
+		localizationKey.addText("comments", "Comments");
 		localizationKey.addMultiReference("localizationValues", "Localization values", localizationValue, false);
-		localizationKey.addMultiReference("topics", "topics", localizationTopic, false);
+		localizationKey.addMultiReference("topics", "Topics", localizationTopic, false);
 
-		localizationTopic.addMultiReference("keys", "keys", localizationKey, false);
-		localizationTopic.addReference("application", "application", application, false);
-		localizationTopic.addText("icon", "icon");
-		localizationTopic.addText("title", "title");
-		localizationTopic.addFile("screenshot", "screenshot", true, 100000, false);
+		localizationTopic.addMultiReference("keys", "Keys", localizationKey, false);
+		localizationTopic.addReference("application", "Application", application, false);
+		localizationTopic.addText("icon", "Icon");
+		localizationTopic.addText("title", "Title");
+		localizationTopic.addFile("screenshot", "Screenshot", true, 100000, false);
 
 		localizationValue.addReference("localizationKey", "Localization key", localizationKey, false);
-		localizationValue.addText("language", "language");
-		localizationValue.addText("original", "original");
+		localizationValue.addText("language", "Language");
+		localizationValue.addText("original", "Original");
 		localizationValue.addText("machineTranslation", "Machine translation");
-		localizationValue.addText("translation", "translation");
+		localizationValue.addText("translation", "Translation");
 		localizationValue.addText("adminLocalOverride", "Admin local override");
 		localizationValue.addText("adminKeyOverride", "Admin key override");
 		localizationValue.addText("currentDisplayValue", "Current display value");
-		localizationValue.addText("notes", "notes");
+		localizationValue.addText("notes", "Notes");
 		localizationValue.addEnum("machineTranslationState", "Machine translation state", machineTranslationState);
 		localizationValue.addEnum("translationState", "Translation state", translationState);
 		localizationValue.addEnum("translationVerificationState", "Translation verification state", translationVerificationState);
 
-		login.addReference("user", "user", user, false);
-		login.addText("ip", "ip");
+		login.addReference("user", "User", user, false);
+		login.addText("ip", "Ip");
 		login.addText("userAgent", "User agent");
 		login.addBoolean("mobileDevice", "Mobile device");
 		login.addText("screenSize", "Screen size");
@@ -201,22 +198,22 @@ public class Model implements ModelProvider {
 
 		managedApplication.addReference("mainApplication", "Main application", application, false);
 		managedApplication.addReference("organizationField", "Organization field", organizationField, false);
-		managedApplication.addText("icon", "icon");
+		managedApplication.addText("icon", "Icon");
 		managedApplication.addText("titleKey", "Title key");
 		managedApplication.addText("descriptionKey", "Description key");
 		managedApplication.addBoolean("singleApplication", "Single application");
 		managedApplication.addBoolean("darkTheme", "Dark theme");
 		managedApplication.addBoolean("startOnLogin", "Start on login");
-		managedApplication.addMultiReference("perspectives", "perspectives", managedApplicationPerspective, true);
+		managedApplication.addMultiReference("perspectives", "Perspectives", managedApplicationPerspective, true);
 		managedApplication.addInteger("listingPosition", "Listing position");
 		managedApplication.addBoolean("toolbarApplicationMenu", "Toolbar application menu");
 		managedApplication.addReference("applicationGroup", "Application group", managedApplicationGroup, false);
-		managedApplication.addBoolean("hidden", "hidden");
+		managedApplication.addBoolean("hidden", "Hidden");
 
-		managedApplicationGroup.addText("icon", "icon");
-		managedApplicationGroup.addText("name", "name");
+		managedApplicationGroup.addText("icon", "Icon");
+		managedApplicationGroup.addText("name", "Name");
 		managedApplicationGroup.addText("titleKey", "Title key");
-		managedApplicationGroup.addMultiReference("applications", "applications", managedApplication, false);
+		managedApplicationGroup.addMultiReference("applications", "Applications", managedApplication, false);
 		managedApplicationGroup.addInteger("listingPosition", "Listing position");
 
 		managedApplicationPerspective.addReference("managedApplication", "Managed application", managedApplication, false);
@@ -227,71 +224,71 @@ public class Model implements ModelProvider {
 		managedApplicationPerspective.addBoolean("toolbarPerspectiveMenu", "Toolbar perspective menu");
 		managedApplicationPerspective.addInteger("listingPosition", "Listing position");
 
-		newsBoardMessage.addBoolean("published", "published");
+		newsBoardMessage.addBoolean("published", "Published");
 		newsBoardMessage.addText("htmlMessage", "Html message");
-		newsBoardMessage.addText("language", "language");
-		newsBoardMessage.addMultiReference("images", "images", newsBoardMessageImage, true);
-		newsBoardMessage.addMultiReference("translations", "translations", newsBoardMessageTranslation, true);
+		newsBoardMessage.addText("language", "Language");
+		newsBoardMessage.addMultiReference("images", "Images", newsBoardMessageImage, true);
+		newsBoardMessage.addMultiReference("translations", "Translations", newsBoardMessageTranslation, true);
 		newsBoardMessage.addReference("organizationField", "Organization field", organizationField, false);
 		newsBoardMessage.addReference("organizationUnit", "Organization unit", organizationUnit, false);
 
-		newsBoardMessageImage.addFile("file", "file", true, 100000, false);
-		newsBoardMessageImage.addFile("thumbnail", "thumbnail", true, 100000, false);
+		newsBoardMessageImage.addFile("file", "File", true, 100000, false);
+		newsBoardMessageImage.addFile("thumbnail", "Thumbnail", true, 100000, false);
 		newsBoardMessageImage.addText("fileName", "File name");
-		newsBoardMessageImage.addBoolean("embedded", "embedded");
-		newsBoardMessageImage.addInteger("position", "position");
+		newsBoardMessageImage.addBoolean("embedded", "Embedded");
+		newsBoardMessageImage.addInteger("position", "Position");
 
-		newsBoardMessageTranslation.addReference("message", "message", newsBoardMessage, false);
-		newsBoardMessageTranslation.addText("language", "language");
-		newsBoardMessageTranslation.addText("translation", "translation");
+		newsBoardMessageTranslation.addReference("message", "Message", newsBoardMessage, false);
+		newsBoardMessageTranslation.addText("language", "Language");
+		newsBoardMessageTranslation.addText("translation", "Translation");
 
-		organizationField.addTranslatableText("title", "title");
-		organizationField.addText("icon", "icon");
+		organizationField.addTranslatableText("title", "Title");
+		organizationField.addText("icon", "Icon");
 
-		organizationFieldView.addTranslatableText("title", "title");
-		organizationFieldView.addText("icon", "icon");
+		organizationFieldView.addTranslatableText("title", "Title");
+		organizationFieldView.addText("icon", "Icon");
 
-		organizationUnit.addTranslatableText("name", "name");
-		organizationUnit.addReference("parent", "parent", organizationUnit, false);
-		organizationUnit.addMultiReference("children", "children", organizationUnit, false);
-		organizationUnit.addReference("type", "type", organizationUnitType, false);
-		organizationUnit.addText("icon", "icon");
+		organizationUnit.addTranslatableText("name", "Name");
+		organizationUnit.addReference("parent", "Parent", organizationUnit, false);
+		organizationUnit.addMultiReference("children", "Children", organizationUnit, false);
+		organizationUnit.addReference("type", "Type", organizationUnitType, false);
+		organizationUnit.addText("icon", "Icon");
 		organizationUnit.addEnum("orgUnitLifeCycleStatus", "Org unit life cycle status", orgUnitLifeCycleStatus);
-		organizationUnit.addReference("address", "address", address, false);
-		organizationUnit.addMultiReference("users", "users", user, false);
+		organizationUnit.addReference("address", "Address", address, false);
+		organizationUnit.addMultiReference("users", "Users", user, false);
 		organizationUnit.addMultiReference("userRoleAssignments", "User role assignments", userRoleAssignment, false);
 
-		organizationUnitType.addTranslatableText("name", "name");
-		organizationUnitType.addTranslatableText("abbreviation", "abbreviation");
-		organizationUnitType.addText("icon", "icon");
+		organizationUnitType.addTranslatableText("name", "Name");
+		organizationUnitType.addTranslatableText("abbreviation", "Abbreviation");
+		organizationUnitType.addText("icon", "Icon");
 		organizationUnitType.addBoolean("translateOrganizationUnits", "Translate organization units");
 		organizationUnitType.addBoolean("allowUsers", "Allow users");
 		organizationUnitType.addReference("defaultChildType", "Default child type", organizationUnitType, false);
 		organizationUnitType.addMultiReference("possibleChildrenTypes", "Possible children types", organizationUnitType, false);
 		organizationUnitType.addEnum("geoLocationType", "Geo location type", geoLocationType);
 
-		organizationUnitTypeView.addTranslatableText("name", "name");
-		organizationUnitTypeView.addTranslatableText("abbreviation", "abbreviation");
-		organizationUnitTypeView.addText("icon", "icon");
+		organizationUnitTypeView.addTranslatableText("name", "Name");
+		organizationUnitTypeView.addTranslatableText("abbreviation", "Abbreviation");
+		organizationUnitTypeView.addText("icon", "Icon");
 		organizationUnitTypeView.addBoolean("translateOrganizationUnits", "Translate organization units");
 		organizationUnitTypeView.addBoolean("allowUserContainer", "Allow user container");
 		organizationUnitTypeView.addReference("defaultChildType", "Default child type", organizationUnitTypeView, false);
 		organizationUnitTypeView.addMultiReference("possibleChildrenTypes", "Possible children types", organizationUnitTypeView, false);
 		organizationUnitTypeView.addEnum("geoLocationType", "Geo location type", geoLocationType);
 
-		organizationUnitView.addTranslatableText("name", "name");
-		organizationUnitView.addReference("parent", "parent", organizationUnitView, false);
-		organizationUnitView.addMultiReference("children", "children", organizationUnitView, false);
-		organizationUnitView.addReference("type", "type", organizationUnitTypeView, false);
-		organizationUnitView.addText("icon", "icon");
+		organizationUnitView.addTranslatableText("name", "Name");
+		organizationUnitView.addReference("parent", "Parent", organizationUnitView, false);
+		organizationUnitView.addMultiReference("children", "Children", organizationUnitView, false);
+		organizationUnitView.addReference("type", "Type", organizationUnitTypeView, false);
+		organizationUnitView.addText("icon", "Icon");
 		organizationUnitView.addEnum("orgUnitLifeCycleStatus", "Org unit life cycle status", orgUnitLifeCycleStatus);
-		organizationUnitView.addReference("address", "address", addressView, false);
+		organizationUnitView.addReference("address", "Address", addressView, false);
 
-		role.addTranslatableText("title", "title");
-		role.addText("icon", "icon");
+		role.addTranslatableText("title", "Title");
+		role.addText("icon", "Icon");
 		role.addEnum("roleType", "Role type", roleType);
-		role.addReference("parent", "parent", role, false);
-		role.addMultiReference("children", "children", role, false);
+		role.addReference("parent", "Parent", role, false);
+		role.addMultiReference("children", "Children", role, false);
 		role.addReference("organizationUnit", "Organization unit", organizationUnit, false);
 		role.addMultiReference("allowedOrganizationUnitTypes", "Allowed organization unit types", organizationUnitType, false);
 		role.addReference("organizationField", "Organization field", organizationField, false);
@@ -305,18 +302,18 @@ public class Model implements ModelProvider {
 		role.addMultiReference("privilegeAssignments", "Privilege assignments", rolePrivilegeAssignment, true);
 		role.addMultiReference("applicationRoleAssignments", "Application role assignments", roleApplicationRoleAssignment, true);
 
-		roleApplicationRoleAssignment.addReference("role", "role", role, false);
-		roleApplicationRoleAssignment.addReference("application", "application", application, false);
+		roleApplicationRoleAssignment.addReference("role", "Role", role, false);
+		roleApplicationRoleAssignment.addReference("application", "Application", application, false);
 		roleApplicationRoleAssignment.addText("applicationRoleName", "Application role name");
 		roleApplicationRoleAssignment.addReference("organizationFieldFilter", "Organization field filter", organizationField, false);
 		roleApplicationRoleAssignment.addReference("fixedOrganizationRoot", "Fixed organization root", organizationUnit, false);
 		roleApplicationRoleAssignment.addMultiReference("organizationUnitTypeFilter", "Organization unit type filter", organizationUnitType, false);
 		roleApplicationRoleAssignment.addBoolean("noInheritanceOfOrganizationalUnits", "Noinheritance of organizational units");
 
-		rolePrivilegeAssignment.addReference("role", "role", role, false);
-		rolePrivilegeAssignment.addReference("application", "application", application, false);
+		rolePrivilegeAssignment.addReference("role", "Role", role, false);
+		rolePrivilegeAssignment.addReference("application", "Application", application, false);
 		rolePrivilegeAssignment.addReference("privilegeGroup", "Privilege group", applicationPrivilegeGroup, false);
-		rolePrivilegeAssignment.addMultiReference("privileges", "privileges", applicationPrivilege, false);
+		rolePrivilegeAssignment.addMultiReference("privileges", "Privileges", applicationPrivilege, false);
 		rolePrivilegeAssignment.addText("privilegeObjects", "Privilege objects");
 		rolePrivilegeAssignment.addBoolean("privilegeObjectInheritance", "Privilege object inheritance");
 		rolePrivilegeAssignment.addReference("organizationFieldFilter", "Organization field filter", organizationField, false);
@@ -326,13 +323,13 @@ public class Model implements ModelProvider {
 
 		systemLog.addReference("managedApplication", "Managed application", managedApplication, false);
 		systemLog.addReference("managedPerspective", "Managed perspective", managedApplicationPerspective, false);
-		systemLog.addReference("application", "application", application, false);
+		systemLog.addReference("application", "Application", application, false);
 		systemLog.addReference("applicationPerspective", "Application perspective", applicationPerspective, false);
 		systemLog.addReference("applicationVersion", "Application version", applicationVersion, false);
 		systemLog.addEnum("logLevel", "Log level", logLevel);
-		systemLog.addText("thread", "thread");
-		systemLog.addText("message", "message");
-		systemLog.addText("details", "details");
+		systemLog.addText("thread", "Thread");
+		systemLog.addText("message", "Message");
+		systemLog.addText("details", "Details");
 		systemLog.addText("exceptionClass", "Exception class");
 
 		systemSettings.addText("allowedBaseLanguages", "Allowed base languages");
@@ -344,52 +341,43 @@ public class Model implements ModelProvider {
 		user.addByteArray("profilePicture", "Profile picture");
 		user.addByteArray("profilePictureLarge", "Profile picture large");
 		user.addText("displayLanguage", "Display language");
-		user.addText("email", "email");
-		user.addText("mobile", "mobile");
-		user.addText("phone", "phone");
-		user.addText("login", "login");
-		user.addTimestamp("lastLogin", "Last login");
-		user.addText("password", "password");
-		user.addText("theme", "theme");
+		user.addText("email", "Email");
+		user.addText("mobile", "Mobile");
+		user.addText("phone", "Phone");
+		user.addText("login", "Login");
+		user.addText("password", "Password");
+		user.addText("theme", "Theme");
 		user.addBoolean("darkTheme", "Dark theme");
 		user.addEnum("userAccountStatus", "User account status", userAccountStatus);
-		user.addReference("acceptedPolicies", "Accepted policies", userAcceptedPolicy, false);
-		user.addReference("address", "address", address, false);
+		user.addReference("address", "Address", address, false);
 		user.addReference("organizationUnit", "Organization unit", organizationUnit, false);
 		user.addMultiReference("accessTokens", "Access tokens", userAccessToken, true);
 		user.addMultiReference("roleAssignments", "Role assignments", userRoleAssignment, true);
-		user.addMultiReference("languageSettings", "Language settings", userLanguageSettings, false);
-		user.addReference("loginStats", "Login stats", userLoginStats, false);
+		user.addMultiReference("languageSettings", "Language settings", userLanguageSettings, true);
+		user.addReference("loginStats", "Login stats", userLoginStats, true);
 
-		userAcceptedPolicy.addInteger("lastAcceptedPrivacyPolicy", "Last accepted privacy policy");
-		userAcceptedPolicy.addInteger("lastAcceptedTermsOfUse", "Last accepted terms of use");
-		userAcceptedPolicy.addMultiReference("acceptEntries", "Accept entries", userAcceptedPolicyEntries, false);
-
-		userAcceptedPolicyEntries.addInteger("acceptedPrivacyPolicy", "Accepted privacy policy");
-		userAcceptedPolicyEntries.addInteger("acceptedTermsOfUse", "Accepted terms of use");
-
-		userAccessToken.addReference("user", "user", user, false);
+		userAccessToken.addReference("user", "User", user, false);
 		userAccessToken.addText("userAgentOnCreation", "User agent on creation");
 		userAccessToken.addText("userAgentLastUsed", "User agent last used");
 		userAccessToken.addTimestamp("lastUsed", "Last used");
-		userAccessToken.addBoolean("valid", "valid");
+		userAccessToken.addBoolean("valid", "Valid");
 		userAccessToken.addBoolean("restApi", "Rest api");
 		userAccessToken.addText("secureToken", "Secure token");
 
-		userLanguageSettings.addText("language", "language");
+		userLanguageSettings.addText("language", "Language");
 		userLanguageSettings.addEnum("languageSkillLevel", "Language skill level", languageSkillLevel);
 
-		userLoginStats.addReference("user", "user", user, false);
+		userLoginStats.addReference("user", "User", user, false);
 		userLoginStats.addTimestamp("firstLogin", "First login");
 		userLoginStats.addTimestamp("lastLogin", "Last login");
 		userLoginStats.addInteger("loginCount", "Login count");
-		userLoginStats.addTimestamp("lastLoginIpAddress", "Last login ip address");
+		userLoginStats.addText("lastLoginIpAddress", "Last login ip address");
 		userLoginStats.addTimestamp("wrongPasswordTimestamp", "Wrong password timestamp");
-		userLoginStats.addTimestamp("wrongPasswordIpAddress", "Wrong password ip address");
+		userLoginStats.addText("wrongPasswordIpAddress", "Wrong password ip address");
 		userLoginStats.addInteger("wrongPasswordCount", "Wrong password count");
 
-		userRoleAssignment.addReference("user", "user", user, false);
-		userRoleAssignment.addReference("role", "role", role, false);
+		userRoleAssignment.addReference("user", "User", user, false);
+		userRoleAssignment.addReference("role", "Role", role, false);
 		userRoleAssignment.addReference("organizationUnit", "Organization unit", organizationUnit, false);
 		userRoleAssignment.addInteger("delegatedCustomPrivilegeObjectId", "Delegated custom privilege object id");
 		userRoleAssignment.addBoolean("mainResponsible", "Main responsible");
@@ -402,7 +390,7 @@ public class Model implements ModelProvider {
 		userView.addText("lastNameTranslated", "Last name translated");
 		userView.addByteArray("profilePicture", "Profile picture");
 		userView.addByteArray("profilePictureLarge", "Profile picture large");
-		userView.addText("language", "language");
+		userView.addText("language", "Language");
 		userView.addReference("organizationUnit", "Organization unit", organizationUnitView, false);
 
 		model.addReverseReferenceField(application, "perspectives", applicationPerspective, "application");
