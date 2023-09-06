@@ -56,7 +56,6 @@ public class Model implements ModelProvider {
 		TableModel localizationKey = model.createTable("localizationKey", "Localization key", true, true, true);
 		TableModel localizationTopic = model.createTable("localizationTopic", "Localization topic", true, true, true);
 		TableModel localizationValue = model.createTable("localizationValue", "Localization value", true, true, true);
-		TableModel login = model.createTable("login", "Login", false, false, true);
 		TableModel managedApplication = model.createTable("managedApplication", "Managed application", true, true, true);
 		TableModel managedApplicationGroup = model.createTable("managedApplicationGroup", "Managed application group", true, true, true);
 		TableModel managedApplicationPerspective = model.createTable("managedApplicationPerspective", "Managed application perspective", true, true, true);
@@ -186,16 +185,6 @@ public class Model implements ModelProvider {
 		localizationValue.addEnum("translationState", "Translation state", translationState);
 		localizationValue.addEnum("translationVerificationState", "Translation verification state", translationVerificationState);
 
-		login.addReference("user", "User", user, false);
-		login.addText("ip", "Ip");
-		login.addText("userAgent", "User agent");
-		login.addBoolean("mobileDevice", "Mobile device");
-		login.addText("screenSize", "Screen size");
-		login.addTimestamp("dateLogin", "Date login");
-		login.addTimestamp("dateLogout", "Date logout");
-		login.addInteger("activityCount", "Activity count");
-		login.addInteger("applicationOpenCount", "Application open count");
-
 		managedApplication.addReference("mainApplication", "Main application", application, false);
 		managedApplication.addReference("organizationField", "Organization field", organizationField, false);
 		managedApplication.addText("icon", "Icon");
@@ -257,6 +246,9 @@ public class Model implements ModelProvider {
 		organizationUnit.addReference("address", "Address", address, false);
 		organizationUnit.addMultiReference("users", "Users", user, false);
 		organizationUnit.addMultiReference("userRoleAssignments", "User role assignments", userRoleAssignment, false);
+		organizationUnit.addTimestamp("lifeCycleChangeDatePrepareDeletion"); //new
+		organizationUnit.addTimestamp("lifeCycleChangeDateInactive"); //new
+		organizationUnit.addTimestamp("lifeCycleChangeDateDeleted"); //new
 
 		organizationUnitType.addTranslatableText("name", "Name");
 		organizationUnitType.addTranslatableText("abbreviation", "Abbreviation");
