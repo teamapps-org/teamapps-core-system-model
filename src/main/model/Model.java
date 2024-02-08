@@ -45,6 +45,8 @@ public class Model implements ModelProvider {
 		EnumModel translationState = model.createEnum("translationState", "Translation state", Arrays.asList("translationRequested", "ok", "unclear", "notNecessary"), Arrays.asList("Translation requested", "Ok", "Unclear", "Not necessary"));
 		EnumModel translationVerificationState = model.createEnum("translationVerificationState", "Translation verification state", Arrays.asList("notYetTranslated", "verificationRequested", "ok", "correctionsRequired", "notNecessary"), Arrays.asList("Not yet translated", "Verification requested", "Ok", "Corrections required", "Not necessary"));
 		EnumModel userAccountStatus = model.createEnum("userAccountStatus", "User account status", Arrays.asList("active", "inactive", "superAdmin"), Arrays.asList("Active", "Inactive", "Super admin"));
+		EnumModel gender = model.createEnum("gender", "Gender", Arrays.asList("male", "female", "unknown"), Arrays.asList("Male", "Female", "Unknown"));
+		EnumModel totpAuthenticationType = model.createEnum("totpAuthenticationType", "none", "onEveryLogin", "oncePerDayPerDevice");
 
 		TableModel address = model.createTable("address", "Address", true, true, true);
 		TableModel application = model.createTable("application", "Application", true, true, true);
@@ -326,6 +328,7 @@ public class Model implements ModelProvider {
 
 		systemSettings.addText("allowedBaseLanguages", "Allowed base languages");
 
+		user.addEnum("gender", "gender", gender);
 		user.addText("firstName", "First name");
 		user.addText("firstNameTranslated", "First name translated");
 		user.addText("lastName", "Last name");
@@ -347,11 +350,15 @@ public class Model implements ModelProvider {
 		user.addMultiReference("roleAssignments", "Role assignments", userRoleAssignment, true);
 		user.addMultiReference("languageSettings", "Language settings", userLanguageSettings, true);
 		user.addReference("loginStats", "Login stats", userLoginStats, true);
+		user.addText("totpSecret");
+		user.addEnum(totpAuthenticationType);
+		user.addText("multiFactorPrivilegesSecureHash");
 
 		userAccessToken.addReference("user", "User", user, false);
 		userAccessToken.addText("userAgentOnCreation", "User agent on creation");
 		userAccessToken.addText("userAgentLastUsed", "User agent last used");
 		userAccessToken.addTimestamp("lastUsed", "Last used");
+		userAccessToken.addTimestamp("lastTotpAuthentication");
 		userAccessToken.addBoolean("valid", "Valid");
 		userAccessToken.addBoolean("restApi", "Rest api");
 		userAccessToken.addText("secureToken", "Secure token");
@@ -367,6 +374,7 @@ public class Model implements ModelProvider {
 		userLoginStats.addTimestamp("wrongPasswordTimestamp", "Wrong password timestamp");
 		userLoginStats.addText("wrongPasswordIpAddress", "Wrong password ip address");
 		userLoginStats.addInteger("wrongPasswordCount", "Wrong password count");
+		userLoginStats.addTimestamp("lastTotpAuthentication");
 
 		userRoleAssignment.addReference("user", "User", user, false);
 		userRoleAssignment.addReference("role", "Role", role, false);
