@@ -295,6 +295,9 @@ public class Model implements ModelProvider {
 		role.addMultiReference("userRoleAssignments", "User role assignments", userRoleAssignment, true);
 		role.addMultiReference("privilegeAssignments", "Privilege assignments", rolePrivilegeAssignment, true);
 		role.addMultiReference("applicationRoleAssignments", "Application role assignments", roleApplicationRoleAssignment, true);
+		role.addBoolean("protectedAssignments");
+		role.addBoolean("twoFactorAuthRequired");
+
 
 		roleApplicationRoleAssignment.addReference("role", "Role", role, false);
 		roleApplicationRoleAssignment.addReference("application", "Application", application, false);
