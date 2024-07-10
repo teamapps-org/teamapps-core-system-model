@@ -347,7 +347,7 @@ public class Model implements ModelProvider {
 		user.addText("theme", "Theme");
 		user.addBoolean("darkTheme", "Dark theme");
 		user.addEnum("userAccountStatus", "User account status", userAccountStatus);
-		user.addReference("address", "Address", address, false);
+		user.addReference("address", "Address", address, true);
 		user.addReference("organizationUnit", "Organization unit", organizationUnit, false);
 		user.addMultiReference("accessTokens", "Access tokens", userAccessToken, true);
 		user.addMultiReference("roleAssignments", "Role assignments", userRoleAssignment, true);
