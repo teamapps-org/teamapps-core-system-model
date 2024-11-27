@@ -21,11 +21,9 @@
 import org.teamapps.universaldb.model.DatabaseModel;
 import org.teamapps.universaldb.model.EnumModel;
 import org.teamapps.universaldb.model.TableModel;
-import org.teamapps.universaldb.schema.*;
+import org.teamapps.universaldb.schema.ModelProvider;
 
 import java.util.Arrays;
-
-import static org.teamapps.universaldb.schema.TableOption.*;
 
 public class Model implements ModelProvider {
 
@@ -77,6 +75,7 @@ public class Model implements ModelProvider {
 		TableModel userLanguageSettings = model.createTable("userLanguageSettings", "User language settings", true, true, true);
 		TableModel userLoginStats = model.createTable("userLoginStats", "User login stats", false, false, false);
 		TableModel userRoleAssignment = model.createTable("userRoleAssignment", "User role assignment", true, true, true);
+		TableModel crashReport = model.createTable("crashReport");
 
 		TableModel addressView = model.createRemoteTable("addressView", "Address view", "address", "controlCenter", null);
 		TableModel organizationFieldView = model.createRemoteTable("organizationFieldView", "Organization field view", "organizationField", "controlCenter", null);
@@ -395,6 +394,13 @@ public class Model implements ModelProvider {
 		userView.addByteArray("profilePictureLarge", "Profile picture large");
 		userView.addText("language", "Language");
 		userView.addReference("organizationUnit", "Organization unit", organizationUnitView, false);
+
+		crashReport.addReference("user", user);
+		crashReport.addReference("managedApp", managedApplication);
+		crashReport.addReference("managedAppPerspective", managedApplicationPerspective);
+		crashReport.addText("userDescription");
+		crashReport.addText("rootCause");
+		crashReport.addText("stackTrace");
 
 		model.addReverseReferenceField(application, "perspectives", applicationPerspective, "application");
 		model.addReverseReferenceField(application, "privilegeGroups", applicationPrivilegeGroup, "application");
