@@ -305,6 +305,8 @@ public class Model implements ModelProvider {
 		roleApplicationRoleAssignment.addReference("fixedOrganizationRoot", "Fixed organization root", organizationUnit, false);
 		roleApplicationRoleAssignment.addMultiReference("organizationUnitTypeFilter", "Organization unit type filter", organizationUnitType, false);
 		roleApplicationRoleAssignment.addBoolean("noInheritanceOfOrganizationalUnits", "Noinheritance of organizational units");
+		roleApplicationRoleAssignment.addBoolean("inheritOrgFieldFromRole");
+		roleApplicationRoleAssignment.addMultiReference("additionalOrgFields", organizationField);
 
 		rolePrivilegeAssignment.addReference("role", "Role", role, false);
 		rolePrivilegeAssignment.addReference("application", "Application", application, false);
