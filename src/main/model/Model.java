@@ -140,6 +140,7 @@ public class Model implements ModelProvider {
 		applicationPrivilegeGroup.addText("titleKey", "Title key");
 		applicationPrivilegeGroup.addText("descriptionKey", "Description key");
 		applicationPrivilegeGroup.addMultiReference("privileges", "Privileges", applicationPrivilege, false);
+		applicationPrivilegeGroup.addMultiReference("blockedUsers", user);
 
 		applicationVersion.addReference("application", "Application", application, false);
 		applicationVersion.addFile("binary", "Binary", true, 100000, false);
@@ -357,6 +358,7 @@ public class Model implements ModelProvider {
 		user.addText("totpSecret");
 		user.addEnum(totpAuthenticationType);
 		user.addText("multiFactorPrivilegesSecureHash");
+		user.addMultiReference("blockedPrivileges", applicationPrivilegeGroup);
 
 		userAccessToken.addReference("user", "User", user, false);
 		userAccessToken.addText("userAgentOnCreation", "User agent on creation");
@@ -450,6 +452,7 @@ public class Model implements ModelProvider {
 		model.addReverseReferenceField(userRoleAssignment, "user", user, "roleAssignments");
 		model.addReverseReferenceField(userRoleAssignment, "role", role, "userRoleAssignments");
 		model.addReverseReferenceField(userRoleAssignment, "organizationUnit", organizationUnit, "userRoleAssignments");
+		model.addReverseReferenceField(user, "blockedPrivileges", applicationPrivilegeGroup, "blockedUsers");
 
 		return model;
 	}
