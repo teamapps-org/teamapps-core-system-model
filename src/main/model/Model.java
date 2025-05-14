@@ -45,6 +45,7 @@ public class Model implements ModelProvider {
 		EnumModel userAccountStatus = model.createEnum("userAccountStatus", "User account status", Arrays.asList("active", "inactive", "superAdmin"), Arrays.asList("Active", "Inactive", "Super admin"));
 		EnumModel gender = model.createEnum("gender", "Gender", Arrays.asList("male", "female", "unknown"), Arrays.asList("Male", "Female", "Unknown"));
 		EnumModel totpAuthenticationType = model.createEnum("totpAuthenticationType", "none", "onEveryLogin", "oncePerDayPerDevice");
+		EnumModel orgFieldType = model.createEnum("organizationFieldType", "department", "group", "application");
 
 		TableModel address = model.createTable("address", "Address", true, true, true);
 		TableModel application = model.createTable("application", "Application", true, true, true);
@@ -235,6 +236,12 @@ public class Model implements ModelProvider {
 
 		organizationField.addTranslatableText("title", "Title");
 		organizationField.addText("icon", "Icon");
+		organizationField.addMultiReference("organizationUnitRoots", "Organization unit roots", organizationUnit, false);
+		organizationField.addReference("parentField", "Parent field", organizationField, false);
+		organizationField.addMultiReference("childFields", "Child fields", organizationField, false);
+		organizationField.addEnum("type", orgFieldType);
+		model.addReverseReferenceField(organizationField, "parentField", organizationField, "childFields");
+
 
 		organizationFieldView.addTranslatableText("title", "Title");
 		organizationFieldView.addText("icon", "Icon");
@@ -245,6 +252,7 @@ public class Model implements ModelProvider {
 		organizationUnit.addReference("type", "Type", organizationUnitType, false);
 		organizationUnit.addText("icon", "Icon");
 		organizationUnit.addEnum("orgUnitLifeCycleStatus", "Org unit life cycle status", orgUnitLifeCycleStatus);
+		organizationUnit.addText("language", "Language");
 		organizationUnit.addReference("address", "Address", address, false);
 		organizationUnit.addMultiReference("users", "Users", user, false);
 		organizationUnit.addMultiReference("userRoleAssignments", "User role assignments", userRoleAssignment, false);
